@@ -1,0 +1,88 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.core.model.metadata.IMetadataColumn 
+		org.talend.core.model.process.IConnection
+		org.talend.core.model.process.IConnectionCategory
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.metadata.types.JavaTypesManager
+		org.talend.core.model.metadata.types.JavaType
+		java.util.List 
+    	java.util.Map
+	" 
+%>
+<% 
+    CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+    INode node = (INode)codeGenArgument.getArgument();
+    String cid = node.getUniqueName();	
+    
+    String nuxeoServer = ElementParameterParser.getValue(node, "__SERVERURL__");
+    String nuxeoLogin = ElementParameterParser.getValue(node, "__LOGIN__");
+    String nuxeoPassword = ElementParameterParser.getValue(node, "__PASSWORD__");
+    
+    Boolean isNXQL = new Boolean(ElementParameterParser.getValue(node, "__QUERY_OPTION__"));
+    
+    String NXQL = ElementParameterParser.getValue(node, "__QUERY__");
+    String PPNAME = ElementParameterParser.getValue(node, "__PAGEPROVIDER__");
+    
+    String page = ElementParameterParser.getValue(node, "__PAGENUMBER__");
+    String pageSize = ElementParameterParser.getValue(node, "__PAGESIZE__");
+    
+%>
+
+org.nuxeo.ecm.automation.client.jaxrs.impl.HttpAutomationClient client = new org.nuxeo.ecm.automation.client.jaxrs.impl.HttpAutomationClient(
+                    <%=nuxeoServer%> + "site/automation");
+org.nuxeo.ecm.automation.client.Session session = client.getSession(<%=nuxeoLogin%>,
+                    <%=nuxeoPassword%>);
+
+org.nuxeo.ecm.automation.client.model.PaginableDocuments docs;
+
+int page = <%=page%>;
+boolean hasMorePage = true;
+
+while (hasMorePage) {
+
+org.nuxeo.ecm.automation.client.OperationRequest request = session.newRequest("Document.PageProvider");
+
+request.setHeader("X-NXDocumentProperties","*"); // for now !
+request.set("pageSize", <%=pageSize%>);
+
+request.set("page", page);
+
+<%if (isNXQL) {%>
+  request.set("query", <%=NXQL%>);
+<%} else {%>
+  request.set("providerName", <%=PPNAME%>);
+<%}%>
+
+docs = (org.nuxeo.ecm.automation.client.model.PaginableDocuments) request.execute();
+String nxFieldDef = null;
+String tFieldType = null;
+for (org.nuxeo.ecm.automation.client.model.Document doc : docs) {
+  <% List<? extends IConnection> conns = node.getOutgoingConnections(org.talend.core.model.process.EConnectionType.FLOW_MAIN);
+  for (IConnection conn : conns) {
+    IMetadataTable metadata = conn.getMetadataTable();    
+    for (IMetadataColumn col : metadata.getListColumns()) {
+    String nxFieldDef = col.getComment();
+    if (nxFieldDef==null || nxFieldDef.isEmpty()) {
+      nxFieldDef = col.getLabel();
+    }
+    if ("id".equals(nxFieldDef)) {%>
+     <%=conn.getName()%>.<%=col.getLabel()%> = doc.getId();
+    <%} else if ("path".equals(nxFieldDef)) {%>
+     <%=conn.getName()%>.<%=col.getLabel()%> = doc.getPath();
+    <%} else {%>
+     <%if (col.getTalendType().equals("id_String")) {%>
+     	<%=conn.getName()%>.<%=col.getLabel()%> = doc.getString("<%=nxFieldDef%>");
+     <%} else if (col.getTalendType().equals("id_Date")) {%>
+      	<%=conn.getName()%>.<%=col.getLabel()%> = doc.getDate("<%=nxFieldDef%>");
+     <%} else {%>
+       System.out.println("no mapping for : <%=col.getTalendType()%>" );       
+     <%}
+    }
+   }
+  }
+  %> 
+ 

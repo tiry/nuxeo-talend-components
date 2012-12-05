@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<COMPONENT> 
+  <HEADER AUTHOR="Talend" COMPATIBILITY="ALL" DATA_AUTO_PROPAGATE="false" PLATEFORM="ALL" RELEASE_DATE="20080229A" SERIAL="" STARTABLE="true" STATUS="ALPHA" VERSION="0.102"> 
+    <SIGNATURE/> 
+  </HEADER>  
+  <FAMILIES> 
+    <FAMILY>Nuxeo</FAMILY> 
+  </FAMILIES>  
+  <DOCUMENTATION> 
+    <URL/> 
+  </DOCUMENTATION>  
+  <CONNECTORS> 
+		<CONNECTOR CTYPE="FLOW" MAX_INPUT="0" MAX_OUTPUT="1"/>		
+		<CONNECTOR CTYPE="SUBJOB_OK" MAX_INPUT="1" />
+		<CONNECTOR CTYPE="SUBJOB_ERROR" MAX_INPUT="1" />
+		<CONNECTOR CTYPE="COMPONENT_OK" />
+		<CONNECTOR CTYPE="COMPONENT_ERROR" />
+		<CONNECTOR CTYPE="RUN_IF" /> 
+  </CONNECTORS>  
+  <PARAMETERS>   
+  		<PARAMETER NAME="SCHEMA" FIELD="SCHEMA_TYPE" REQUIRED="true"
+			NUM_ROW="10">
+			
+		</PARAMETER>
+  
+       	<PARAMETER NAME="SERVERURL" FIELD="TEXT" NUM_ROW="30">
+			<DEFAULT>"http://127.0.0.1:8080/nuxeo/"</DEFAULT>
+		</PARAMETER>
+  
+       	<PARAMETER NAME="LOGIN" FIELD="TEXT" NUM_ROW="35">
+			<DEFAULT>"Administrator"</DEFAULT>
+		</PARAMETER>
+  
+       	<PARAMETER NAME="PASSWORD" FIELD="TEXT" NUM_ROW="40">
+			<DEFAULT>"Administrator"</DEFAULT>
+		</PARAMETER>
+  
+     	<PARAMETER NAME="QUERY_OPTION" FIELD="CHECK" REQUIRED="true"
+			NUM_ROW="45">
+			<DEFAULT>true</DEFAULT>
+		</PARAMETER>
+  
+       	<PARAMETER NAME="QUERY" FIELD="MEMO_SQL" NUM_ROW="45" SHOW_IF="QUERY_OPTION=='true'">
+			<DEFAULT>"Select * from Document"</DEFAULT>
+		</PARAMETER>
+		
+		<PARAMETER NAME="PAGEPROVIDER" FIELD="TEXT" NUM_ROW="50" SHOW_IF="QUERY_OPTION=='false'">
+			<DEFAULT>"user_documents"</DEFAULT>
+		</PARAMETER>
+		
+		<PARAMETER NAME="PAGESIZE" FIELD="TEXT" NUM_ROW="60">
+			<DEFAULT>5</DEFAULT>
+		</PARAMETER>
+		
+		<PARAMETER NAME="PAGENUMBER" FIELD="INTEGER" NUM_ROW="60">
+			<DEFAULT>0</DEFAULT>
+		</PARAMETER>
+		
+  </PARAMETERS>  
+  <ADVANCED_PARAMETERS>  
+  </ADVANCED_PARAMETERS>  
+  <CODEGENERATION> 
+    <IMPORTS> 
+      <IMPORT MODULE="nuxeo-automation-client-5.7-SNAPSHOT.jar" NAME="nuxeo-automation-client-5.7-SNAPSHOT" REQUIRED="true"/>
+      <IMPORT MODULE="httpcore-4.1.jar" NAME="httpcore-4.1" REQUIRED="true"/>
+      <IMPORT MODULE="httpclient-4.1.jar" NAME="httpclient-4.1" REQUIRED="true"/>
+      <IMPORT MODULE="jackson-core-asl-1.8.1.jar" NAME="jackson-core-asl-1.8.1" REQUIRED="true"/>
+      <IMPORT MODULE="jackson-mapper-asl-1.8.1.jar" NAME="jackson-mapper-asl-1.8.1" REQUIRED="true"/>
+      <IMPORT MODULE="jackson-mapper-asl-1.8.1.jar" NAME="jackson-mapper-asl-1.8.1" REQUIRED="true"/>
+      <IMPORT MODULE="commons-logging-1.1.jar" NAME="commons-logging-1.1" REQUIRED="true"/>
+      <IMPORT MODULE="mail-1.4.jar" NAME="mail-1.4" REQUIRED="true"/>       
+    </IMPORTS> 
+  </CODEGENERATION>  
+  <RETURNS> 
+    <RETURN AVAILABILITY="AFTER" NAME="NB_LINE" TYPE="id_Integer"/> 
+  </RETURNS> 
+</COMPONENT>
