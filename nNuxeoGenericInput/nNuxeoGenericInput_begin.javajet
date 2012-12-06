@@ -1,0 +1,88 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.core.model.metadata.IMetadataColumn 
+		org.talend.core.model.process.IConnection
+		org.talend.core.model.process.IConnectionCategory
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.metadata.types.JavaTypesManager
+		org.talend.core.model.metadata.types.JavaType
+		java.util.List 
+    	java.util.Map
+    	java.util.HashMap
+	" 
+%>
+<% 
+    CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+    INode node = (INode)codeGenArgument.getArgument();
+    String cid = node.getUniqueName();	
+    
+    String nuxeoServer = ElementParameterParser.getValue(node, "__SERVERURL__");
+    String nuxeoLogin = ElementParameterParser.getValue(node, "__LOGIN__");
+    String nuxeoPassword = ElementParameterParser.getValue(node, "__PASSWORD__");
+    
+    String opName = ElementParameterParser.getValue(node, "__OPERATION__");
+
+    Map<String, String> params = new HashMap<String, String>();
+    
+    System.out.println("YoHou!");
+    
+    for (int i = 1; i <= 6; i++) {
+    	Boolean active = new Boolean(ElementParameterParser.getValue(node, "__PARAM" + i + "__"));
+    	if (active==null || !active) {
+    	  System.out.println("exit after parameter " + i);
+    	  break;
+    	}    	
+	    String pname = ElementParameterParser.getValue(node, "__PNAME" + i + "__");
+	    String pvalue = ElementParameterParser.getValue(node, "__PVALUE" + i + "__");
+	    params.put(pname, pvalue);	       
+	    System.out.println("setting param " + pname + " to " + pvalue); 	
+    }        
+%>
+
+System.out.println("YoHou2!");
+
+org.nuxeo.ecm.automation.client.jaxrs.impl.HttpAutomationClient client = new org.nuxeo.ecm.automation.client.jaxrs.impl.HttpAutomationClient(
+                    <%=nuxeoServer%> + "site/automation");
+org.nuxeo.ecm.automation.client.Session session = client.getSession(<%=nuxeoLogin%>,
+                    <%=nuxeoPassword%>);
+
+org.nuxeo.ecm.automation.client.model.Documents docs;
+
+org.nuxeo.ecm.automation.client.OperationRequest request = session.newRequest(<%=opName%>);
+request.setHeader("X-NXDocumentProperties","*"); // for now !
+
+<%for (String pname : params.keySet()) {%>
+  request.set("<%=pname%>", "<%=params.get(pname)%>");
+<%}%>
+
+docs = (org.nuxeo.ecm.automation.client.model.PaginableDocuments) request.execute();
+
+for (org.nuxeo.ecm.automation.client.model.Document doc : docs) {
+  <% List<? extends IConnection> conns = node.getOutgoingConnections(org.talend.core.model.process.EConnectionType.FLOW_MAIN);
+  for (IConnection conn : conns) {
+    IMetadataTable metadata = conn.getMetadataTable();    
+    for (IMetadataColumn col : metadata.getListColumns()) {
+    String nxFieldDef = col.getComment();
+    if (nxFieldDef==null || nxFieldDef.isEmpty()) {
+      nxFieldDef = col.getLabel();
+    }
+    if ("id".equals(nxFieldDef)) {%>
+     <%=conn.getName()%>.<%=col.getLabel()%> = doc.getId();
+    <%} else if ("path".equals(nxFieldDef)) {%>
+     <%=conn.getName()%>.<%=col.getLabel()%> = doc.getPath();
+    <%} else {%>
+     <%if (col.getTalendType().equals("id_String")) {%>
+     	<%=conn.getName()%>.<%=col.getLabel()%> = doc.getString("<%=nxFieldDef%>");
+     <%} else if (col.getTalendType().equals("id_Date")) {%>
+      	<%=conn.getName()%>.<%=col.getLabel()%> = doc.getDate("<%=nxFieldDef%>");
+     <%} else {%>
+       System.out.println("no mapping for : <%=col.getTalendType()%>" );       
+     <%}
+    }
+   }
+  }
+  %> 
+ 

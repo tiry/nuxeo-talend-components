@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<COMPONENT> 
+  <HEADER AUTHOR="Talend" COMPATIBILITY="ALL" DATA_AUTO_PROPAGATE="false" PLATEFORM="ALL" RELEASE_DATE="20080229A" SERIAL="" STARTABLE="true" STATUS="ALPHA" VERSION="0.102"> 
+    <SIGNATURE/> 
+  </HEADER>  
+  <FAMILIES> 
+    <FAMILY>Nuxeo</FAMILY> 
+  </FAMILIES>  
+  <DOCUMENTATION> 
+    <URL/> 
+  </DOCUMENTATION>  
+  <CONNECTORS> 
+    <CONNECTOR CTYPE="FLOW" MAX_INPUT="1"/> 
+  </CONNECTORS>  
+  <PARAMETERS> 
+  		<PARAMETER NAME="SCHEMA" FIELD="SCHEMA_TYPE" REQUIRED="true"
+			NUM_ROW="10">			
+		</PARAMETER>
+  
+       	<PARAMETER NAME="SERVERURL" FIELD="TEXT" NUM_ROW="30">
+			<DEFAULT>"http://127.0.0.1:8080/nuxeo/"</DEFAULT>
+		</PARAMETER>
+  
+       	<PARAMETER NAME="LOGIN" FIELD="TEXT" NUM_ROW="35">
+			<DEFAULT>"Administrator"</DEFAULT>
+		</PARAMETER>
+  
+       	<PARAMETER NAME="PASSWORD" FIELD="TEXT" NUM_ROW="40">
+			<DEFAULT>"Administrator"</DEFAULT>
+		</PARAMETER>
+  
+     	<PARAMETER NAME="OPERATION" FIELD="TEXT" NUM_ROW="45">
+			<DEFAULT>"Document.PageProvider"</DEFAULT>
+		</PARAMETER>
+  
+     	<PARAMETER NAME="PARAM1" FIELD="CHECK" REQUIRED="true"
+			NUM_ROW="50">
+			<DEFAULT>true</DEFAULT>
+		</PARAMETER>
+       	<PARAMETER NAME="PNAME1" FIELD="TEXT" NUM_ROW="50" SHOW_IF="PARAM1=='true'">			
+		</PARAMETER>		
+		<PARAMETER NAME="PVALUE1" FIELD="TEXT" NUM_ROW="50" SHOW_IF="PARAM1=='true'">			
+		</PARAMETER>		
+		
+
+     	<PARAMETER NAME="PARAM2" FIELD="CHECK" REQUIRED="true"
+			NUM_ROW="60" SHOW_IF="PARAM1=='true'">
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+       	<PARAMETER NAME="PNAME2" FIELD="TEXT" NUM_ROW="60" SHOW_IF="PARAM2=='true'">			
+		</PARAMETER>		
+		<PARAMETER NAME="PVALUE2" FIELD="TEXT" NUM_ROW="60" SHOW_IF="PARAM2=='true'">			
+		</PARAMETER>
+
+     	<PARAMETER NAME="PARAM3" FIELD="CHECK" REQUIRED="true"
+			NUM_ROW="65" SHOW_IF="PARAM2=='true'">
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+       	<PARAMETER NAME="PNAME3" FIELD="TEXT" NUM_ROW="65" SHOW_IF="PARAM3=='true'">			
+		</PARAMETER>		
+		<PARAMETER NAME="PVALUE3" FIELD="TEXT" NUM_ROW="65" SHOW_IF="PARAM3=='true'">			
+		</PARAMETER>		
+
+
+     	<PARAMETER NAME="PARAM4" FIELD="CHECK" REQUIRED="true"
+			NUM_ROW="75" SHOW_IF="PARAM3=='true'">
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+       	<PARAMETER NAME="PNAME4" FIELD="TEXT" NUM_ROW="75" SHOW_IF="PARAM4=='true'">			
+		</PARAMETER>		
+		<PARAMETER NAME="PVALUE4" FIELD="TEXT" NUM_ROW="75" SHOW_IF="PARAM4=='true'">			
+		</PARAMETER>		
+
+		
+     	<PARAMETER NAME="PARAM5" FIELD="CHECK" REQUIRED="true"
+			NUM_ROW="85" SHOW_IF="PARAM4=='true'">
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+       	<PARAMETER NAME="PNAME5" FIELD="TEXT" NUM_ROW="85" SHOW_IF="PARAM5=='true'">			
+		</PARAMETER>		
+		<PARAMETER NAME="PVALUE5" FIELD="TEXT" NUM_ROW="85" SHOW_IF="PARAM5=='true'">			
+		</PARAMETER>		
+		
+		
+     	<PARAMETER NAME="PARAM6" FIELD="CHECK" REQUIRED="true"
+			NUM_ROW="95" SHOW_IF="PARAM5=='true'">
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+       	<PARAMETER NAME="PNAME6" FIELD="TEXT" NUM_ROW="95" SHOW_IF="PARAM6=='true'">			
+		</PARAMETER>		
+		<PARAMETER NAME="PVALUE6" FIELD="TEXT" NUM_ROW="95" SHOW_IF="PARAM6=='true'">			
+		</PARAMETER>		
+			 
+  </PARAMETERS>  
+  <ADVANCED_PARAMETERS> 
+    <PARAMETER FIELD="TEXT" NAME="PROPERTYADVANCED" NUM_ROW="1"/> 
+  </ADVANCED_PARAMETERS>  
+  <CODEGENERATION>
+      <IMPORTS> 
+      <IMPORT MODULE="nuxeo-automation-client-5.7-SNAPSHOT.jar" NAME="nuxeo-automation-client-5.7-SNAPSHOT" REQUIRED="true"/>
+      <IMPORT MODULE="httpcore-4.1.jar" NAME="httpcore-4.1" REQUIRED="true"/>
+      <IMPORT MODULE="httpclient-4.1.jar" NAME="httpclient-4.1" REQUIRED="true"/>
+      <IMPORT MODULE="jackson-core-asl-1.8.1.jar" NAME="jackson-core-asl-1.8.1" REQUIRED="true"/>
+      <IMPORT MODULE="jackson-mapper-asl-1.8.1.jar" NAME="jackson-mapper-asl-1.8.1" REQUIRED="true"/>
+      <IMPORT MODULE="jackson-mapper-asl-1.8.1.jar" NAME="jackson-mapper-asl-1.8.1" REQUIRED="true"/>
+      <IMPORT MODULE="commons-logging-1.1.jar" NAME="commons-logging-1.1" REQUIRED="true"/>
+      <IMPORT MODULE="mail-1.4.jar" NAME="mail-1.4" REQUIRED="true"/>       
+    </IMPORTS> 
+  </CODEGENERATION>  
+  <RETURNS> 
+    <RETURN AVAILABILITY="AFTER" NAME="NB_LINE" TYPE="id_Integer"/> 
+  </RETURNS> 
+</COMPONENT>
