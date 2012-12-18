@@ -1,0 +1,80 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.core.model.metadata.IMetadataColumn 
+		org.talend.core.model.process.IConnection
+		org.talend.core.model.process.IConnectionCategory
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.metadata.types.JavaTypesManager
+		org.talend.core.model.metadata.types.JavaType
+		java.util.List 
+    	java.util.Map		
+	" 
+%>
+<% 
+    CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+    INode node = (INode)codeGenArgument.getArgument();
+    String cid = node.getUniqueName();	
+    
+    String opName = ElementParameterParser.getValue(node, "__OPERATION__");    
+    String parentPath = ElementParameterParser.getValue(node, "__PARENT_PATH__");    
+    String docType = ElementParameterParser.getValue(node, "__DOCTYPE__");
+    
+%>
+
+org.nuxeo.ecm.automation.client.OperationRequest <%=cid%>_request = <%=cid%>_session.newRequest(<%=opName%>);
+org.nuxeo.ecm.automation.client.model.DocRef parentRef = new org.nuxeo.ecm.automation.client.model.DocRef(<%=parentPath%>);
+
+<%=cid%>_request.setInput(parentRef);
+<%=cid%>_request.set("type",<%=docType%>);
+	
+<%=cid%>_request.set("name","bitou");
+
+org.nuxeo.ecm.automation.client.model.PropertyMap <%=cid%>_propMap = new org.nuxeo.ecm.automation.client.model.PropertyMap(); 
+
+<%
+List<IMetadataTable> metadatas = node.getMetadataList();
+if ((metadatas!=null)&&(metadatas.size()>0)) {//1
+    IMetadataTable metadata = metadatas.get(0);
+    if (metadata!=null) {//2
+
+    	List< ? extends IConnection> conns = node.getIncomingConnections();
+    	for (IConnection conn : conns) {//3
+    		if (conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {//4
+    			List<IMetadataColumn> columns = metadata.getListColumns();
+    			int sizeColumns = columns.size();
+    			for (int i = 0; i < sizeColumns; i++) {//5
+  			
+    				IMetadataColumn column = columns.get(i);
+				    String nxFieldDef = column.getComment();
+				    if (nxFieldDef==null || nxFieldDef.isEmpty()) {
+				      nxFieldDef = column.getLabel();
+				    }
+				    nxFieldDef = nxFieldDef.replaceFirst("_",":");
+    				
+					JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+					
+					if ("name".equals(nxFieldDef)) {%>
+                    <%=cid%>_request.set("name",<%=conn.getName() %>.<%=column.getLabel()%>);					
+					<%} else if ("path".equals(nxFieldDef)) {%>
+					parentRef = new org.nuxeo.ecm.automation.client.model.DocRef(<%=parentPath%>);
+                    <%=cid%>_request.setInput(parentRef);					
+					<%} else if ("type".equals(nxFieldDef)) {%>
+					<%=cid%>_request.set("type",<%=docType%>);
+					<%} else {%>
+                    <%=cid%>_propMap.set("<%=nxFieldDef%>",<%=conn.getName() %>.<%=column.getLabel()%>);
+                    <%}
+    		}//4
+    	}//3
+    }//2
+}//1
+%>
+
+<%=cid%>_request.set("properties",propMap.toString());
+
+System.out.println("calling create with props = " + <%=cid%>_propMap.toString());
+ 
+org.nuxeo.ecm.automation.client.model.Document <%=cid%>_doc = (org.nuxeo.ecm.automation.client.model.Document) <%=cid%>_request.execute();
+
