@@ -66,6 +66,7 @@ if ((metadatas!=null)&&(metadatas.size()>0)) {//1
 					<%} else {%>
                     <%=cid%>_propMap.set("<%=nxFieldDef%>",<%=conn.getName() %>.<%=column.getLabel()%>);
                     <%}
+                  }//5
     		}//4
     	}//3
     }//2
