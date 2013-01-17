@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.navigator.viewer">
+      <viewerContentBinding
+            viewerId="org.talend.repository.cnf.view">
+         <includes>
+            <contentExtension
+                  pattern="org.nuxeo.*">
+            </contentExtension>
+         </includes>
+      </viewerContentBinding>
+   </extension>
+   <extension
+         point="org.talend.core.repository.repository_node_provider">
+      <repositoryNode
+            class="org.nuxeo.talend.extension.NuxeoRepositoryNode"
+            folder="metadata/nuxeo"
+            isResouce="true"
+            label="Nuxeo Platform"
+            parentNodeType="METADATA"
+            products="DI"
+            type="NUXEO">
+      </repositoryNode>
+   </extension>
+   <extension
+         point="org.eclipse.ui.navigator.navigatorContent">
+      <navigatorContent
+            activeByDefault="true"
+            appearsBefore="org.talend.repository.viewer.metadata.genericSchemas"
+            contentProvider="org.nuxeo.talend.extension.MetadataNuxeoContentProvider"
+            icon="icons/nx.gif"
+            id="org.nuxeo.talend.repository.viewer.metadata"
+            labelProvider="org.nuxeo.talend.extension.NuxeoLabelProvider"
+            name="Nuxeo"
+            priority="higher">
+         <possibleChildren>
+            <instanceof
+                  value="org.talend.repository.model.RepositoryNode">
+            </instanceof>
+         </possibleChildren>
+         <triggerPoints>
+            <and>
+               <instanceof
+                     value="org.talend.repository.model.RepositoryNode">
+               </instanceof>
+               <!--<test
+                     forcePluginActivation="true"
+                     property="org.talend.repository.node.isMetadataTopNode">
+               </test>-->
+            </and>
+         </triggerPoints>
+         <actionProvider
+               class="org.nuxeo.talend.extension.NuxeoMetedataNodeActionProvier"
+               id="org.nuxeo.talend.extension.NuxeoMetedataNodeActionProvier">
+            <enablement>
+               <and>
+                  <instanceof
+                        value="org.talend.repository.model.RepositoryNode">
+                  </instanceof>
+                  <!--
+                  <test
+                        forcePluginActivation="true"
+                        property="org.talend.repository.node.metadata.isNuxeo">
+                  </test>-->
+                  <not>
+                     <test
+                           forcePluginActivation="true"
+                           property="org.talend.repository.node.isDeleted">
+                     </test>
+                  </not>
+               </and>
+            </enablement>
+         </actionProvider>
+      </navigatorContent>
+         
+   </extension>
+   
+   
+    <extension
+         point="org.talend.core.repository.repository_content">
+      <RepositoryContent
+            class="org.nuxeo.talend.extension.NuxeoRepositoryHandler">
+      </RepositoryContent>
+   </extension>
+   <!--<extension
+         point="org.talend.core.repository.repository_handler">
+      <RepositoryHandler
+            class="org.nuxeo.talend.extension.NuxeoDragAndDropHandler">
+      </RepositoryHandler>
+   </extension>-->
+   
+   <extension
+         point="org.talend.core.repositoryContextualsActions">
+    <Action
+            class="org.nuxeo.talend.extension.NuxeoAction"
+            id="org.nuxeo.talend.extension.NuxeoAction"
+            isEditAction="true"
+            isReadAction="true"
+            level="10"
+            name="Metadata/Nuxeo Action Test"/>     
+   </extension>
+   
+   <extension
+         point="org.eclipse.emf.ecore.generated_package">
+      <package
+            class="org.nuxeo.talend.extension.model.NuxeoPackage"
+            uri="http://www.nuxeo.com/talendNuxeo">
+      </package>
+   </extension>
+   
+
+</plugin>
