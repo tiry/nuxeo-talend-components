@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Display;
@@ -27,33 +26,28 @@ import org.talend.core.ITDQRepositoryService;
 import org.talend.core.context.Context;
 import org.talend.core.context.RepositoryContext;
 import org.talend.core.model.metadata.IMetadataConnection;
-import org.talend.core.model.metadata.builder.ConvertionHelper;
 import org.talend.core.model.metadata.builder.connection.DatabaseConnection;
-import org.talend.core.model.metadata.builder.util.MetadataConnectionUtils;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.properties.PropertiesFactory;
 import org.talend.core.model.properties.Property;
 import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.model.repository.IRepositoryViewObject;
-import org.talend.core.model.update.RepositoryUpdateManager;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.core.repository.utils.AbstractResourceChangesService;
 import org.talend.core.repository.utils.TDQServiceRegister;
 import org.talend.core.runtime.CoreRuntimePlugin;
 import org.talend.cwm.helper.ConnectionHelper;
-import org.talend.cwm.helper.SwitchHelpers;
 import org.talend.designer.core.IDesignerCoreService;
 import org.talend.repository.model.IProxyRepositoryFactory;
-import org.talend.repository.model.IRepositoryService;
+import org.talend.repository.model.IRepositoryNode;
 import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.model.RepositoryNodeUtilities;
+import org.talend.repository.model.StableRepositoryNode;
 import org.talend.repository.ui.utils.ConnectionContextHelper;
 import org.talend.repository.ui.wizards.CheckLastVersionRepositoryWizard;
 import org.talend.repository.ui.wizards.PropertiesWizardPage;
 import org.talend.repository.ui.wizards.metadata.connection.Step0WizardPage;
 import org.talend.utils.sugars.ReturnCode;
-import orgomg.cwm.resource.relational.Catalog;
-import orgomg.cwm.resource.relational.Schema;
 
 /**
  * DatabaseWizard present the DatabaseForm. Use to manage the metadata connection.
@@ -80,79 +74,9 @@ public class NuxeoWizard extends CheckLastVersionRepositoryWizard implements INe
 
     private String originalStatus;
 
-    private String originalSid;
-
-    private String originalUiSchema;
-
     private boolean isToolBar;
 
     private RepositoryNode node;
-
-    /**
-     * Constructor for DatabaseWizard. Analyse Iselection to extract DatabaseConnection and the pathToSave. Start the
-     * Lock Strategy.
-     * 
-     * @param selection
-     * @param existingNames
-     */
-    public NuxeoWizard(IWorkbench workbench, boolean creation, ISelection selection, String[] existingNames) {
-        super(workbench, creation);
-        this.selection = selection;
-        this.existingNames = existingNames;
-        setNeedsProgressMonitor(true);
-        // RepositoryNode node = null;
-        Object obj = ((IStructuredSelection) selection).getFirstElement();
-        if (obj instanceof RepositoryNode) {
-            node = (RepositoryNode) obj;
-        } else {
-            return;
-        }
-
-        switch (node.getType()) {
-        case SIMPLE_FOLDER:
-        case REPOSITORY_ELEMENT:
-            pathToSave = RepositoryNodeUtilities.getPath(node);
-            break;
-        case SYSTEM_FOLDER:
-            pathToSave = new Path(""); //$NON-NLS-1$
-            break;
-        }
-
-        switch (node.getType()) {
-        case SIMPLE_FOLDER:
-        case SYSTEM_FOLDER:
-            connection = NuxeoFactory.eINSTANCE.createNuxeoConnection();
-            connectionProperty = PropertiesFactory.eINSTANCE.createProperty();
-            connectionProperty.setAuthor(((RepositoryContext) CoreRuntimePlugin.getInstance().getContext()
-                    .getProperty(Context.REPOSITORY_CONTEXT_KEY)).getUser());
-            connectionProperty.setVersion(VersionUtils.DEFAULT_VERSION);
-            connectionProperty.setStatusCode(""); //$NON-NLS-1$
-
-            connectionItem = NuxeoFactory.eINSTANCE.createNuxeoConnectionItem();
-            connectionItem.setProperty(connectionProperty);
-            connectionItem.setConnection(connection);
-            break;
-
-        case REPOSITORY_ELEMENT:
-            connection = (NuxeoConnection) ((ConnectionItem) node.getObject().getProperty().getItem()).getConnection();
-            connectionProperty = node.getObject().getProperty();
-            connectionItem = (ConnectionItem) node.getObject().getProperty().getItem();
-            // set the repositoryObject, lock and set isRepositoryObjectEditable
-            setRepositoryObject(node.getObject());
-            isRepositoryObjectEditable();
-            initLockStrategy();
-            break;
-        }
-        if (!creation) {
-            this.originaleObjectLabel = this.connectionItem.getProperty().getDisplayName();
-            this.originalVersion = this.connectionItem.getProperty().getVersion();
-            this.originalDescription = this.connectionItem.getProperty().getDescription();
-            this.originalPurpose = this.connectionItem.getProperty().getPurpose();
-            this.originalStatus = this.connectionItem.getProperty().getStatusCode();
-        }
-        // initialize the context mode
-        ConnectionContextHelper.checkContextMode(connectionItem);
-    }
 
     /**
      * Constructor for DatabaseWizard. Analyse Iselection to extract DatabaseConnection and the pathToSave. Start the
@@ -265,15 +189,11 @@ public class NuxeoWizard extends CheckLastVersionRepositoryWizard implements INe
      */
     @Override
     public boolean performFinish() {
+    	System.out.println("performFinish");
         if (nuxeoWizardPage.isPageComplete()) {
-            /*
-             * if create connection in TOS with context model,should use the original value when create catalog or //
-             * schema,see bug 0016636,using metadataConnection can be sure that all the values has been parse to
-             * original. hywang
-             */
-        	
-            IMetadataConnection metadataConnection = null;
-            metadataConnection = ConvertionHelper.convert(connection, true);
+        
+        	System.out.println("performFinish / pageComplete");
+        	            
             final IProxyRepositoryFactory factory = ProxyRepositoryFactory.getInstance();
 
             ITDQRepositoryService tdqRepService = null;
@@ -293,33 +213,24 @@ public class NuxeoWizard extends CheckLastVersionRepositoryWizard implements INe
                     connectionProperty.setLabel(displayName);
                     this.connection.setName(displayName);
                     this.connection.setLabel(displayName);
-
+                    
                     if (tdqRepService != null) {
                         tdqRepService.checkUsernameBeforeSaveConnection(connectionItem);
                     }
                     factory.create(connectionItem, propertiesWizardPage.getDestinationPath());
-
-                    // MOD yyi 2011-04-14:20362 reload connection
-                    ConnectionHelper.setIsConnNeedReload(connection, Boolean.TRUE);
-                    // MOD klliu 2012-02-08 TDQ-4645 add package filter for connection
-                    ConnectionHelper.setPackageFilter(connection, "");//$NON-NLS-1$
-
-                    MetadataConnectionUtils.fillConnectionInformation(connectionItem, metadataConnection);
-
-                    // if after fillConnection there is still no dataPackages, need to fill them from extractor
-                    List<Catalog> catalogs = ConnectionHelper.getCatalogs(connection);
-                    List<Schema> schemas = ConnectionHelper.getSchema(connection);
-/*                    if (catalogs.isEmpty() && schemas.isEmpty()) {
-                        IDBMetadataProvider extractor = ExtractMetaDataFromDataBase.getProviderByDbType(metadataConnection
-                                .getDbType());
-                        if (extractor != null && type.isUseProvider()) {
-                            extractor.fillConnection(connection);
-                            factory.save(connectionItem);
-                        }
-                    }*/
+                    
+                    System.out.println("create additional sub nodes");
+                    
+                    RepositoryNode opNode = new StableRepositoryNode(node,
+                            Messages.getString("Automation Operations"), ECoreImage.FOLDER_CLOSE_ICON); //$NON-NLS-1$
+             	    node.getChildren().add(opNode);             	   
+             	   
+             	   
+             	    
+             	    
                 } else {
-                    if (connectionItem.getConnection() instanceof DatabaseConnection) {
-                        DatabaseConnection conn = (DatabaseConnection) connectionItem.getConnection();
+                    if (connectionItem.getConnection() instanceof NuxeoConnection) {
+                    	NuxeoConnection conn = (NuxeoConnection) connectionItem.getConnection();
                         ReturnCode reloadCheck = new ReturnCode(false);
                         if (tdqRepService != null && ConnectionHelper.isUrlChanged(conn)) {
                             reloadCheck = openConfirmReloadConnectionDialog(Display.getCurrent().getActiveShell());
@@ -336,14 +247,7 @@ public class NuxeoWizard extends CheckLastVersionRepositoryWizard implements INe
                                     }
                                 }
                             }
-                        } else {
-                            DatabaseConnection dbConn = SwitchHelpers.DATABASECONNECTION_SWITCH.doSwitch(conn);
-                            if (dbConn != null) {
-                                updateConnectionInformation(dbConn, metadataConnection);
-                            }
-                        }
-                        // update
-                        RepositoryUpdateManager.updateDBConnection(connectionItem);
+                        } 
                     }
                     // changed by hqzhang for TDI-19527, label=displayName
                     connectionProperty.setLabel(connectionProperty.getDisplayName());
@@ -379,31 +283,10 @@ public class NuxeoWizard extends CheckLastVersionRepositoryWizard implements INe
                 new ErrorDialogWidthDetailArea(getShell(), PID, Messages.getString("CommonWizard.persistenceException"), //$NON-NLS-1$
                         detailError);
                 log.error(Messages.getString("CommonWizard.persistenceException") + "\n" + detailError); //$NON-NLS-1$ //$NON-NLS-2$
+                e.printStackTrace();
                 return false;
             }
-            List<IRepositoryViewObject> list = new ArrayList<IRepositoryViewObject>();
-            list.add(repositoryObject);
-            if (GlobalServiceRegister.getDefault().isServiceRegistered(IRepositoryService.class)) {
-                IRepositoryService service = (IRepositoryService) GlobalServiceRegister.getDefault().getService(
-                        IRepositoryService.class);
-                service.notifySQLBuilder(list);
-            }
-
-            if (tdqRepService != null) {
-                // MOD qiongli 2012-11-19 TDQ-6287
-                if (creation) {
-                    tdqRepService.notifySQLExplorer(connectionItem);
-                    tdqRepService.openConnectionEditor(connectionItem);
-                } else {
-                    tdqRepService.removeAliasInSQLExplorer(node);
-                    tdqRepService.notifySQLExplorer(connectionItem);
-                    // refresh the opened connection editor whatever is in DI or DQ perspective.
-                    tdqRepService.refreshConnectionEditor(connectionItem);
-                }
-                if (CoreRuntimePlugin.getInstance().isDataProfilePerspectiveSelected()) {
-                    tdqRepService.refresh(node.getParent());
-                }
-            }
+            
             updateTdqDependencies();
             return true;
         } else {
@@ -411,9 +294,6 @@ public class NuxeoWizard extends CheckLastVersionRepositoryWizard implements INe
         }
     }
 
-    /**
-     * DOC xqliu Comment method "updateTdqDependencies".
-     */
     private void updateTdqDependencies() {
         if (connectionItem != null) {
             String oldVersion = this.originalVersion;
@@ -436,9 +316,6 @@ public class NuxeoWizard extends CheckLastVersionRepositoryWizard implements INe
             connectionItem.getProperty().setDescription(this.originalDescription);
             connectionItem.getProperty().setPurpose(this.originalPurpose);
             connectionItem.getProperty().setStatusCode(this.originalStatus);
-            
-            //DBConnectionContextUtils.setDatabaseConnectionParameter((DatabaseConnection) connectionItem.getConnection(),
-            //        databaseWizardPage.getMetadataConnection());
         }
         return super.performCancel();
     }
@@ -454,22 +331,11 @@ public class NuxeoWizard extends CheckLastVersionRepositoryWizard implements INe
         this.selection = selection2;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.talend.repository.ui.wizards.RepositoryWizard#getConnectionItem()
-     */
     @Override
     public ConnectionItem getConnectionItem() {
         return this.connectionItem;
     }
 
-    /**
-     * 
-     * DOC Comment method "updateConnectionInformation".
-     * 
-     * @param dbConn
-     */
     private void updateConnectionInformation(DatabaseConnection dbConn, IMetadataConnection metaConnection) {
 
     }

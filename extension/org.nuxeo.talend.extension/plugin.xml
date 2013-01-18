@@ -106,7 +106,7 @@
    <extension
          point="org.eclipse.emf.ecore.generated_package">
       <package
-            class="org.nuxeo.talend.extension.model.NuxeoPackage"
+            class="org.nuxeo.talend.extension.model.nuxeo.NuxeoPackage"
             uri="http://www.nuxeo.com/talendNuxeo">
       </package>
    </extension>
