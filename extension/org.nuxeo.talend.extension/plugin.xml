@@ -76,8 +76,7 @@
          </actionProvider>
       </navigatorContent>
          
-   </extension>
-   
+   </extension>   
    
     <extension
          point="org.talend.core.repository.repository_content">
@@ -85,12 +84,12 @@
             class="org.nuxeo.talend.extension.NuxeoRepositoryHandler">
       </RepositoryContent>
    </extension>
-   <!--<extension
+   <extension
          point="org.talend.core.repository.repository_handler">
       <RepositoryHandler
-            class="org.nuxeo.talend.extension.NuxeoDragAndDropHandler">
+            class="org.nuxeo.talend.extension.NuxeoNodeDragAndDropHandler">
       </RepositoryHandler>
-   </extension>-->
+   </extension>
    
    <extension
          point="org.talend.core.repositoryContextualsActions">
@@ -111,5 +110,15 @@
       </package>
    </extension>
    
+   <extension
+      point="org.eclipse.core.expressions.propertyTesters">
+    <propertyTester
+            class="org.nuxeo.talend.extension.NuxeoMetadataNodeTester"
+            id="org.nuxeo.talend.extension.node.tester"
+            namespace="org.talend.repository.node.metadata"
+            properties="isNuxeo"
+            type="org.talend.repository.model.RepositoryNode">
+     </propertyTester>    
+  </extension>
 
 </plugin>
