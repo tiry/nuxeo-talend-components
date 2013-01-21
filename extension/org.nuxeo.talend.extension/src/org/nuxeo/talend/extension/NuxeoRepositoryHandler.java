@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.ui.IWorkbench;
 import org.nuxeo.talend.extension.model.nuxeo.NuxeoConnectionItem;
+import org.nuxeo.talend.extension.model.nuxeo.NuxeoFactory;
 import org.talend.commons.exception.PersistenceException;
 import org.talend.commons.ui.runtime.exception.ExceptionHandler;
 import org.talend.commons.ui.runtime.image.IImage;
@@ -39,9 +40,6 @@ public class NuxeoRepositoryHandler implements IRepositoryContentHandler {
 
     private XmiResourceManager xmiResourceManager = new XmiResourceManager();
 
-    /**
-     * DOC ggu ExampleDemoRepositoryHandler constructor comment.
-     */
     public NuxeoRepositoryHandler() {
     }
 
@@ -73,12 +71,12 @@ public class NuxeoRepositoryHandler implements IRepositoryContentHandler {
     public Resource save(Item item) throws PersistenceException {
         ERepositoryObjectType repositoryObjectType = getRepositoryObjectType(item);
         if (isRepObjType(repositoryObjectType)) {
-        	/*
-            ExampleDemoConnectionItem demoItem = (ExampleDemoConnectionItem) item;
+        	
+        	NuxeoConnectionItem nxItem = (NuxeoConnectionItem) item;
             Resource itemResource = xmiResourceManager.getItemResource(item);
             itemResource.getContents().clear();
-            itemResource.getContents().add(demoItem.getConnection());
-            return itemResource;*/
+            itemResource.getContents().add(nxItem.getConnection());
+            return itemResource;
         }
         return null;
     }
@@ -92,7 +90,7 @@ public class NuxeoRepositoryHandler implements IRepositoryContentHandler {
     @Override
     public Item createNewItem(ERepositoryObjectType type) {
         if (isRepObjType(type)) {
-            //return DemoFactory.eINSTANCE.createExampleDemoConnectionItem();
+        	return NuxeoFactory.eINSTANCE.createNuxeoConnectionItem();        	
         }
         return null;
     }
@@ -198,7 +196,7 @@ public class NuxeoRepositoryHandler implements IRepositoryContentHandler {
      */
     @Override
     public void addContents(Collection<EObject> collection, Resource resource) {
-
+    	
     }
 
     /*
@@ -270,7 +268,6 @@ public class NuxeoRepositoryHandler implements IRepositoryContentHandler {
      */
     @Override
     public IWizard newWizard(IWorkbench workbench, boolean creation, RepositoryNode node, String[] existingNames) {
-        // TODO Auto-generated method stub
         return null;
     }
 

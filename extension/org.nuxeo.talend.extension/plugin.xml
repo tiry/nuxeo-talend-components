@@ -9,7 +9,7 @@
          <includes>
             <contentExtension
                   pattern="org.nuxeo.*">
-            </contentExtension>
+            </contentExtension>            
          </includes>
       </viewerContentBinding>
    </extension>

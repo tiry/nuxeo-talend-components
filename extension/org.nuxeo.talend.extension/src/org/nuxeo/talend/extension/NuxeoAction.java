@@ -1,22 +1,24 @@
 package org.nuxeo.talend.extension;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import org.nuxeo.talend.extension.model.nuxeo.NuxeoConnectionItem;
+import org.nuxeo.talend.extension.wizard.Messages;
 import org.nuxeo.talend.extension.wizard.NuxeoWizard;
 import org.talend.commons.ui.runtime.image.ECoreImage;
 import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.model.repository.RepositoryManager;
-import org.talend.core.repository.i18n.Messages;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.core.repository.ui.actions.metadata.AbstractCreateAction;
 import org.talend.core.ui.images.OverlayImageProvider;
 import org.talend.repository.ProjectManager;
 import org.talend.repository.model.IProxyRepositoryFactory;
+import org.talend.repository.model.RepositoryNodeUtilities;
 import org.talend.repository.model.IRepositoryNode.EProperties;
 import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.model.StableRepositoryNode;
@@ -112,26 +114,22 @@ public class NuxeoAction extends AbstractCreateAction {
 			return;
 		}
 
-		System.out.println("CreateDialog");
+        IPath npath = RepositoryNodeUtilities.getPath(repositoryNode);
+
+        
+		System.out.println("Run create Action on node " + npath.toOSString() + " of type " + repositoryNode.getType().toString());
 
 		NuxeoWizard nxWizard = new NuxeoWizard(PlatformUI.getWorkbench(), creation,
 				repositoryNode, getExistingNames());
 		
 		WizardDialog wizardDialog = new WizardDialog(Display.getCurrent().getActiveShell(),nxWizard);
 
-		if (creation) {
-			RepositoryNode opNode = new StableRepositoryNode(
-					repositoryNode,
-					Messages.getString("Automation Operations2"), ECoreImage.FOLDER_CLOSE_ICON); //$NON-NLS-1$
-			repositoryNode.getChildren().add(opNode);
-		}
-
-	    
 		wizardDialog.setPageSize(800, 400);
 		wizardDialog.create();
 		wizardDialog.open();
-		RepositoryManager.refreshSavedNode(repositoryNode);
-
+		if (!creation) {
+	            RepositoryManager.refreshSavedNode(repositoryNode);
+	    }
 	}
 
 	@Override

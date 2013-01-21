@@ -1,16 +1,10 @@
 package org.nuxeo.talend.extension.wizard;
 
-//import java.sql.DatabaseMetaData;
-//import java.sql.Driver;
-//import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.log4j.Logger;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
@@ -22,7 +16,6 @@ import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
 import org.talend.commons.utils.VersionUtils;
 import org.talend.core.GlobalServiceRegister;
-import org.talend.core.ITDQRepositoryService;
 import org.talend.core.context.Context;
 import org.talend.core.context.RepositoryContext;
 import org.talend.core.model.metadata.IMetadataConnection;
@@ -31,15 +24,13 @@ import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.properties.PropertiesFactory;
 import org.talend.core.model.properties.Property;
 import org.talend.core.model.repository.ERepositoryObjectType;
-import org.talend.core.model.repository.IRepositoryViewObject;
+import org.talend.core.model.update.RepositoryUpdateManager;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.core.repository.utils.AbstractResourceChangesService;
 import org.talend.core.repository.utils.TDQServiceRegister;
 import org.talend.core.runtime.CoreRuntimePlugin;
-import org.talend.cwm.helper.ConnectionHelper;
 import org.talend.designer.core.IDesignerCoreService;
 import org.talend.repository.model.IProxyRepositoryFactory;
-import org.talend.repository.model.IRepositoryNode;
 import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.model.RepositoryNodeUtilities;
 import org.talend.repository.model.StableRepositoryNode;
@@ -47,10 +38,9 @@ import org.talend.repository.ui.utils.ConnectionContextHelper;
 import org.talend.repository.ui.wizards.CheckLastVersionRepositoryWizard;
 import org.talend.repository.ui.wizards.PropertiesWizardPage;
 import org.talend.repository.ui.wizards.metadata.connection.Step0WizardPage;
-import org.talend.utils.sugars.ReturnCode;
 
 /**
- * DatabaseWizard present the DatabaseForm. Use to manage the metadata connection.
+ * Wizard to create the connection to a Nuxeo server
  */
 public class NuxeoWizard extends CheckLastVersionRepositoryWizard implements INewWizard {
 
@@ -196,13 +186,6 @@ public class NuxeoWizard extends CheckLastVersionRepositoryWizard implements INe
         	            
             final IProxyRepositoryFactory factory = ProxyRepositoryFactory.getInstance();
 
-            ITDQRepositoryService tdqRepService = null;
-
-            if (GlobalServiceRegister.getDefault().isServiceRegistered(ITDQRepositoryService.class)) {
-                tdqRepService = (ITDQRepositoryService) GlobalServiceRegister.getDefault()
-                        .getService(ITDQRepositoryService.class);
-            }
-
             try {
                 if (creation) {
                     String nextId = factory.getNextId();
@@ -214,41 +197,24 @@ public class NuxeoWizard extends CheckLastVersionRepositoryWizard implements INe
                     this.connection.setName(displayName);
                     this.connection.setLabel(displayName);
                     
-                    if (tdqRepService != null) {
-                        tdqRepService.checkUsernameBeforeSaveConnection(connectionItem);
-                    }
                     factory.create(connectionItem, propertiesWizardPage.getDestinationPath());
                     
-                    System.out.println("create additional sub nodes");
+                    IPath npath = RepositoryNodeUtilities.getPath(node);
+                    
+                    System.out.println("create additional sub nodes on node " + node.getType().toString() + " on path " + npath.toOSString());
+                    
                     
                     RepositoryNode opNode = new StableRepositoryNode(node,
                             Messages.getString("Automation Operations"), ECoreImage.FOLDER_CLOSE_ICON); //$NON-NLS-1$
-             	    node.getChildren().add(opNode);             	   
-             	   
-             	   
+             	    node.getChildren().add(opNode);                 	                 	                	                	    
+
              	    
-             	    
+             	                 	    
                 } else {
-                    if (connectionItem.getConnection() instanceof NuxeoConnection) {
-                    	NuxeoConnection conn = (NuxeoConnection) connectionItem.getConnection();
-                        ReturnCode reloadCheck = new ReturnCode(false);
-                        if (tdqRepService != null && ConnectionHelper.isUrlChanged(conn)) {
-                            reloadCheck = openConfirmReloadConnectionDialog(Display.getCurrent().getActiveShell());
-                            if (!reloadCheck.isOk()) {
-                                return false;
-                            }
-                        }
-                        if (reloadCheck.isOk()) {
-                            if (needReload(reloadCheck.getMessage())) {
-                                if (tdqRepService != null) {
-                                    ReturnCode retCode = tdqRepService.reloadDatabase(connectionItem);
-                                    if (!retCode.isOk()) {
-                                        return Boolean.FALSE;
-                                    }
-                                }
-                            }
-                        } 
-                    }
+                	// update
+                    //if (connectionItem.getConnection() instanceof NuxeoConnection) {
+                    //	NuxeoConnection conn = (NuxeoConnection) connectionItem.getConnection();
+                    //}
                     // changed by hqzhang for TDI-19527, label=displayName
                     connectionProperty.setLabel(connectionProperty.getDisplayName());
                     this.connection.setName(connectionProperty.getDisplayName());
@@ -259,14 +225,7 @@ public class NuxeoWizard extends CheckLastVersionRepositoryWizard implements INe
                     // 0005170: Schema renamed - new name not pushed out to dependant jobs
                     boolean isNameModified = propertiesWizardPage.isNameModifiedByUser();
 
-                    // MOD yyin 20121115 TDQ-6395, save all dependency of the connection when the name is changed.
-                    if (isNameModified && tdqRepService != null) {
-                        tdqRepService.saveConnectionWithDependency(connectionItem);
-                        closeLockStrategy();
-                    } else {
-                        updateConnectionItem();
-                    }
-                    // ~
+                    updateConnectionItem();
 
                     if (isNameModified) {
                         if (GlobalServiceRegister.getDefault().isServiceRegistered(IDesignerCoreService.class)) {
@@ -358,22 +317,6 @@ public class NuxeoWizard extends CheckLastVersionRepositoryWizard implements INe
      */
     public static boolean needReload(String reloadFlag) {
         return RELOAD_FLAG_TRUE.equals(reloadFlag);
-    }
-
-    /**
-     * open the confirm dialog
-     * 
-     * @param shell
-     * @return
-     */
-    public static ReturnCode openConfirmReloadConnectionDialog(Shell shell) {
-        ReturnCode result = new ReturnCode(false);
-        ConfirmReloadConnectionDialog dialog = new ConfirmReloadConnectionDialog(shell);
-        if (dialog.open() == Window.OK) {
-            result.setOk(true);
-            result.setMessage(dialog.getReloadFlag());
-        }
-        return result;
     }
 
 }
