@@ -597,6 +597,379 @@ public interface NuxeoPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link org.nuxeo.talend.extension.model.nuxeo.impl.AutomationOperationImpl <em>Automation Operation</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.nuxeo.talend.extension.model.nuxeo.impl.AutomationOperationImpl
+	 * @see org.nuxeo.talend.extension.model.nuxeo.impl.NuxeoPackageImpl#getAutomationOperation()
+	 * @generated
+	 */
+	int AUTOMATION_OPERATION = 2;
+
+	/**
+	 * The feature id for the '<em><b>Property</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__PROPERTY = PropertiesPackage.ITEM__PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>State</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__STATE = PropertiesPackage.ITEM__STATE;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__PARENT = PropertiesPackage.ITEM__PARENT;
+
+	/**
+	 * The feature id for the '<em><b>Reference Resources</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__REFERENCE_RESOURCES = PropertiesPackage.ITEM__REFERENCE_RESOURCES;
+
+	/**
+	 * The feature id for the '<em><b>File Extension</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__FILE_EXTENSION = PropertiesPackage.ITEM__FILE_EXTENSION;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__ID = PropertiesPackage.ITEM_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__LABEL = PropertiesPackage.ITEM_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Purpose</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__PURPOSE = PropertiesPackage.ITEM_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__DESCRIPTION = PropertiesPackage.ITEM_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Creation Date</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__CREATION_DATE = PropertiesPackage.ITEM_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>Modification Date</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__MODIFICATION_DATE = PropertiesPackage.ITEM_FEATURE_COUNT + 5;
+
+	/**
+	 * The feature id for the '<em><b>Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__VERSION = PropertiesPackage.ITEM_FEATURE_COUNT + 6;
+
+	/**
+	 * The feature id for the '<em><b>Status Code</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__STATUS_CODE = PropertiesPackage.ITEM_FEATURE_COUNT + 7;
+
+	/**
+	 * The feature id for the '<em><b>Item</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__ITEM = PropertiesPackage.ITEM_FEATURE_COUNT + 8;
+
+	/**
+	 * The feature id for the '<em><b>Author</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__AUTHOR = PropertiesPackage.ITEM_FEATURE_COUNT + 9;
+
+	/**
+	 * The feature id for the '<em><b>Informations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__INFORMATIONS = PropertiesPackage.ITEM_FEATURE_COUNT + 10;
+
+	/**
+	 * The feature id for the '<em><b>Max Information Level</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__MAX_INFORMATION_LEVEL = PropertiesPackage.ITEM_FEATURE_COUNT + 11;
+
+	/**
+	 * The feature id for the '<em><b>Old Status Code</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__OLD_STATUS_CODE = PropertiesPackage.ITEM_FEATURE_COUNT + 12;
+
+	/**
+	 * The feature id for the '<em><b>Additional Properties</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__ADDITIONAL_PROPERTIES = PropertiesPackage.ITEM_FEATURE_COUNT + 13;
+
+	/**
+	 * The feature id for the '<em><b>Display Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__DISPLAY_NAME = PropertiesPackage.ITEM_FEATURE_COUNT + 14;
+
+	/**
+	 * The feature id for the '<em><b>Operation Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__OPERATION_ID = PropertiesPackage.ITEM_FEATURE_COUNT + 15;
+
+	/**
+	 * The feature id for the '<em><b>Signature</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__SIGNATURE = PropertiesPackage.ITEM_FEATURE_COUNT + 16;
+
+	/**
+	 * The number of structural features of the '<em>Automation Operation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION_FEATURE_COUNT = PropertiesPackage.ITEM_FEATURE_COUNT + 17;
+
+
+	/**
+	 * The meta object id for the '{@link org.nuxeo.talend.extension.model.nuxeo.impl.NuxeoSchemaImpl <em>Schema</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.nuxeo.talend.extension.model.nuxeo.impl.NuxeoSchemaImpl
+	 * @see org.nuxeo.talend.extension.model.nuxeo.impl.NuxeoPackageImpl#getNuxeoSchema()
+	 * @generated
+	 */
+	int NUXEO_SCHEMA = 3;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUXEO_SCHEMA__ID = PropertiesPackage.PROPERTY__ID;
+
+	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUXEO_SCHEMA__LABEL = PropertiesPackage.PROPERTY__LABEL;
+
+	/**
+	 * The feature id for the '<em><b>Purpose</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUXEO_SCHEMA__PURPOSE = PropertiesPackage.PROPERTY__PURPOSE;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUXEO_SCHEMA__DESCRIPTION = PropertiesPackage.PROPERTY__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Creation Date</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUXEO_SCHEMA__CREATION_DATE = PropertiesPackage.PROPERTY__CREATION_DATE;
+
+	/**
+	 * The feature id for the '<em><b>Modification Date</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUXEO_SCHEMA__MODIFICATION_DATE = PropertiesPackage.PROPERTY__MODIFICATION_DATE;
+
+	/**
+	 * The feature id for the '<em><b>Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUXEO_SCHEMA__VERSION = PropertiesPackage.PROPERTY__VERSION;
+
+	/**
+	 * The feature id for the '<em><b>Status Code</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUXEO_SCHEMA__STATUS_CODE = PropertiesPackage.PROPERTY__STATUS_CODE;
+
+	/**
+	 * The feature id for the '<em><b>Item</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUXEO_SCHEMA__ITEM = PropertiesPackage.PROPERTY__ITEM;
+
+	/**
+	 * The feature id for the '<em><b>Author</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUXEO_SCHEMA__AUTHOR = PropertiesPackage.PROPERTY__AUTHOR;
+
+	/**
+	 * The feature id for the '<em><b>Informations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUXEO_SCHEMA__INFORMATIONS = PropertiesPackage.PROPERTY__INFORMATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Max Information Level</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUXEO_SCHEMA__MAX_INFORMATION_LEVEL = PropertiesPackage.PROPERTY__MAX_INFORMATION_LEVEL;
+
+	/**
+	 * The feature id for the '<em><b>Old Status Code</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUXEO_SCHEMA__OLD_STATUS_CODE = PropertiesPackage.PROPERTY__OLD_STATUS_CODE;
+
+	/**
+	 * The feature id for the '<em><b>Additional Properties</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUXEO_SCHEMA__ADDITIONAL_PROPERTIES = PropertiesPackage.PROPERTY__ADDITIONAL_PROPERTIES;
+
+	/**
+	 * The feature id for the '<em><b>Display Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUXEO_SCHEMA__DISPLAY_NAME = PropertiesPackage.PROPERTY__DISPLAY_NAME;
+
+	/**
+	 * The number of structural features of the '<em>Schema</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUXEO_SCHEMA_FEATURE_COUNT = PropertiesPackage.PROPERTY_FEATURE_COUNT + 0;
+
+
+	/**
 	 * Returns the meta object for class '{@link org.nuxeo.talend.extension.model.nuxeo.NuxeoConnectionItem <em>Connection Item</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -692,6 +1065,48 @@ public interface NuxeoPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getNuxeoConnection_ContextPath();
+
+	/**
+	 * Returns the meta object for class '{@link org.nuxeo.talend.extension.model.nuxeo.AutomationOperation <em>Automation Operation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Automation Operation</em>'.
+	 * @see org.nuxeo.talend.extension.model.nuxeo.AutomationOperation
+	 * @generated
+	 */
+	EClass getAutomationOperation();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.nuxeo.talend.extension.model.nuxeo.AutomationOperation#getOperationId <em>Operation Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Operation Id</em>'.
+	 * @see org.nuxeo.talend.extension.model.nuxeo.AutomationOperation#getOperationId()
+	 * @see #getAutomationOperation()
+	 * @generated
+	 */
+	EAttribute getAutomationOperation_OperationId();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.nuxeo.talend.extension.model.nuxeo.AutomationOperation#getSignature <em>Signature</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Signature</em>'.
+	 * @see org.nuxeo.talend.extension.model.nuxeo.AutomationOperation#getSignature()
+	 * @see #getAutomationOperation()
+	 * @generated
+	 */
+	EAttribute getAutomationOperation_Signature();
+
+	/**
+	 * Returns the meta object for class '{@link org.nuxeo.talend.extension.model.nuxeo.NuxeoSchema <em>Schema</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Schema</em>'.
+	 * @see org.nuxeo.talend.extension.model.nuxeo.NuxeoSchema
+	 * @generated
+	 */
+	EClass getNuxeoSchema();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -790,6 +1205,42 @@ public interface NuxeoPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute NUXEO_CONNECTION__CONTEXT_PATH = eINSTANCE.getNuxeoConnection_ContextPath();
+
+		/**
+		 * The meta object literal for the '{@link org.nuxeo.talend.extension.model.nuxeo.impl.AutomationOperationImpl <em>Automation Operation</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.nuxeo.talend.extension.model.nuxeo.impl.AutomationOperationImpl
+		 * @see org.nuxeo.talend.extension.model.nuxeo.impl.NuxeoPackageImpl#getAutomationOperation()
+		 * @generated
+		 */
+		EClass AUTOMATION_OPERATION = eINSTANCE.getAutomationOperation();
+
+		/**
+		 * The meta object literal for the '<em><b>Operation Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute AUTOMATION_OPERATION__OPERATION_ID = eINSTANCE.getAutomationOperation_OperationId();
+
+		/**
+		 * The meta object literal for the '<em><b>Signature</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute AUTOMATION_OPERATION__SIGNATURE = eINSTANCE.getAutomationOperation_Signature();
+
+		/**
+		 * The meta object literal for the '{@link org.nuxeo.talend.extension.model.nuxeo.impl.NuxeoSchemaImpl <em>Schema</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.nuxeo.talend.extension.model.nuxeo.impl.NuxeoSchemaImpl
+		 * @see org.nuxeo.talend.extension.model.nuxeo.impl.NuxeoPackageImpl#getNuxeoSchema()
+		 * @generated
+		 */
+		EClass NUXEO_SCHEMA = eINSTANCE.getNuxeoSchema();
 
 	}
 

@@ -62,6 +62,8 @@ public class NuxeoFactoryImpl extends EFactoryImpl implements NuxeoFactory {
 		switch (eClass.getClassifierID()) {
 			case NuxeoPackage.NUXEO_CONNECTION_ITEM: return createNuxeoConnectionItem();
 			case NuxeoPackage.NUXEO_CONNECTION: return createNuxeoConnection();
+			case NuxeoPackage.AUTOMATION_OPERATION: return createAutomationOperation();
+			case NuxeoPackage.NUXEO_SCHEMA: return createNuxeoSchema();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -85,6 +87,26 @@ public class NuxeoFactoryImpl extends EFactoryImpl implements NuxeoFactory {
 	public NuxeoConnection createNuxeoConnection() {
 		NuxeoConnectionImpl nuxeoConnection = new NuxeoConnectionImpl();
 		return nuxeoConnection;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public AutomationOperation createAutomationOperation() {
+		AutomationOperationImpl automationOperation = new AutomationOperationImpl();
+		return automationOperation;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NuxeoSchema createNuxeoSchema() {
+		NuxeoSchemaImpl nuxeoSchema = new NuxeoSchemaImpl();
+		return nuxeoSchema;
 	}
 
 	/**

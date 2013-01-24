@@ -21,20 +21,37 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.ui.IWorkbench;
+import org.nuxeo.talend.extension.model.nuxeo.NuxeoConnection;
 import org.nuxeo.talend.extension.model.nuxeo.NuxeoConnectionItem;
 import org.nuxeo.talend.extension.model.nuxeo.NuxeoFactory;
+import org.nuxeo.talend.extension.wizard.Messages;
 import org.talend.commons.exception.PersistenceException;
 import org.talend.commons.ui.runtime.exception.ExceptionHandler;
+import org.talend.commons.ui.runtime.image.ECoreImage;
 import org.talend.commons.ui.runtime.image.IImage;
+import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.properties.Status;
 import org.talend.core.model.repository.ERepositoryObjectType;
+import org.talend.core.model.repository.Folder;
 import org.talend.core.model.repository.IRepositoryContentHandler;
 import org.talend.core.model.repository.IRepositoryViewObject;
+import org.talend.core.model.repository.RepositoryManager;
+import org.talend.core.repository.model.IRepositoryFactory;
+import org.talend.core.repository.model.ProxyRepositoryFactory;
+import org.talend.core.repository.model.RepositoryFactoryProvider;
 import org.talend.core.repository.utils.XmiResourceManager;
 import org.talend.core.runtime.CoreRuntimePlugin;
+import org.talend.repository.ProjectManager;
+import org.talend.repository.model.IProxyRepositoryFactory;
 import org.talend.repository.model.IRepositoryNode;
 import org.talend.repository.model.RepositoryNode;
+import org.talend.repository.model.RepositoryNodeUtilities;
+import org.talend.repository.model.StableRepositoryNode;
+import org.talend.repository.model.IRepositoryNode.ENodeType;
+import org.talend.repository.model.IRepositoryNode.EProperties;
+
+import org.talend.repository.ui.utils.ConnectionContextHelper;
 
 public class NuxeoRepositoryHandler implements IRepositoryContentHandler {
 
@@ -43,12 +60,6 @@ public class NuxeoRepositoryHandler implements IRepositoryContentHandler {
     public NuxeoRepositoryHandler() {
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.talend.core.model.repository.IRepositoryContentHandler#create(org.eclipse.core.resources.IProject,
-     * org.talend.core.model.properties.Item, int, org.eclipse.core.runtime.IPath)
-     */
     @Override
     public Resource create(IProject project, Item item, int classifierID, IPath path) throws PersistenceException {
         ERepositoryObjectType repositoryObjectType = getRepositoryObjectType(item);
@@ -57,16 +68,13 @@ public class NuxeoRepositoryHandler implements IRepositoryContentHandler {
         	Resource itemResource = xmiResourceManager.createItemResource(project, item, path, repositoryObjectType, false);
         	itemResource.getContents().add(nuxeoItem.getConnection());
         	return itemResource;
+        } else {
+        	System.out.println("calling create on wrong type");
         }
         return null;
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.talend.core.model.repository.IRepositoryContentHandler#save(org.talend.core.model.properties.Item)
-     */
     @Override
     public Resource save(Item item) throws PersistenceException {
         ERepositoryObjectType repositoryObjectType = getRepositoryObjectType(item);
@@ -81,12 +89,6 @@ public class NuxeoRepositoryHandler implements IRepositoryContentHandler {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.talend.core.model.repository.IRepositoryContentHandler#createNewItem(org.talend.core.model.repository.
-     * ERepositoryObjectType)
-     */
     @Override
     public Item createNewItem(ERepositoryObjectType type) {
         if (isRepObjType(type)) {
@@ -95,13 +97,6 @@ public class NuxeoRepositoryHandler implements IRepositoryContentHandler {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.talend.core.model.repository.IRepositoryContentHandler#getRepositoryObjectType(org.talend.core.model.properties
-     * .Item)
-     */
     @Override
     public ERepositoryObjectType getRepositoryObjectType(Item item) {
         if (item instanceof NuxeoConnectionItem) {
@@ -175,57 +170,65 @@ public class NuxeoRepositoryHandler implements IRepositoryContentHandler {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.talend.core.model.repository.IRepositoryContentHandler#addNode(org.talend.core.model.repository.
-     * ERepositoryObjectType, org.talend.repository.model.RepositoryNode,
-     * org.talend.core.model.repository.IRepositoryViewObject, org.talend.repository.model.RepositoryNode)
-     */
     @Override
     public void addNode(ERepositoryObjectType type, RepositoryNode recBinNode, IRepositoryViewObject repositoryObject,
             RepositoryNode node) {
-
+    	
+    	System.out.println("Adding Nodes of type " + type.getType() + " with id=" + node.getId() + " and Label " + node.getLabel());
+    	
+    	
+    	
+    	if(NuxeoRepositoryNodeType.repositoryNuxeoType.equals(type)) {
+    	
+    		/*
+    		Folder folderRepositoryObject = new Folder(repositoryObject., ENodeType.STABLE_SYSTEM_FOLDER);
+			
+	        PortRepositoryObject portRepositoryObject = new PortRepositoryObject(repositoryObject, port);
+	        RepositoryNode portNode = new RepositoryNode(portRepositoryObject, node, ENodeType.REPOSITORY_ELEMENT); //$NON-NLS-1$
+	        portNode.setProperties(EProperties.LABEL, port.getName());
+	        portNode.setProperties(EProperties.CONTENT_TYPE, ERepositoryObjectType.SERVICESPORT);
+	        node.getChildren().add(portNode);
+	        //
+	        List<ServiceOperation> listOperation = port.getServiceOperation();
+	        for (ServiceOperation operation : listOperation) {
+	            OperationRepositoryObject operationRepositoryObject = new OperationRepositoryObject(repositoryObject,
+	                    operation);
+	            RepositoryNode operationNode = new RepositoryNode(operationRepositoryObject, portNode,
+	                    ENodeType.REPOSITORY_ELEMENT); //$NON-NLS-1$
+	            operationNode.setProperties(EProperties.LABEL, operation.getLabel());
+	            operationNode.setProperties(EProperties.CONTENT_TYPE, ERepositoryObjectType.SERVICESOPERATION);
+	            portNode.getChildren().add(operationNode);
+	        }*/
     }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.talend.core.model.repository.IRepositoryContentHandler#addContents(java.util.Collection,
-     * org.eclipse.emf.ecore.resource.Resource)
-     */
+        
+    	
+    	if(NuxeoRepositoryNodeType.repositoryNuxeoType.equals(type)) {
+    		System.out.println("Process on event to create SubNode on Nuxeo nodes of type " + type.getType() + " with id=" + node.getId());
+    		
+    		try {
+				NuxeoServerSubTreeBuilder.build(node);
+			} catch (PersistenceException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}    	
+    	}  	    
+    }
+    
     @Override
     public void addContents(Collection<EObject> collection, Resource resource) {
-    	
+    	System.out.println("Adding Content !!!!");
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.talend.core.model.repository.IRepositoryContentHandler#getHandleType()
-     */
     @Override
     public ERepositoryObjectType getHandleType() {
         return NuxeoRepositoryNodeType.repositoryNuxeoType;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.talend.core.model.repository.IRepositoryContentHandler#hasSchemas()
-     */
     @Override
     public boolean hasSchemas() {
         return true;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.talend.core.model.repository.IRepositoryContentHandler#getPropertyStatus(org.talend.core.model.properties
-     * .Item)
-     */
     @Override
     public List<Status> getPropertyStatus(Item item) {
         try {
@@ -236,36 +239,16 @@ public class NuxeoRepositoryHandler implements IRepositoryContentHandler {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.talend.core.model.repository.IRepositoryContentHandler#hideAction(org.talend.repository.model.IRepositoryNode
-     * , java.lang.Class)
-     */
     @Override
     public boolean hideAction(IRepositoryNode node, Class actionType) {
         return node != null ? isRepObjType(node.getObjectType()) : false;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.talend.core.model.repository.IRepositoryContentHandler#isOwnTable(org.talend.repository.model.IRepositoryNode
-     * , java.lang.Class)
-     */
     @Override
     public boolean isOwnTable(IRepositoryNode node, Class type) {
         return node != null ? isRepObjType(node.getObjectType()) : false;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.talend.core.model.repository.IRepositoryContentHandler#newWizard(org.eclipse.ui.IWorkbench, boolean,
-     * org.talend.repository.model.RepositoryNode, java.lang.String[])
-     */
     @Override
     public IWizard newWizard(IWorkbench workbench, boolean creation, RepositoryNode node, String[] existingNames) {
         return null;

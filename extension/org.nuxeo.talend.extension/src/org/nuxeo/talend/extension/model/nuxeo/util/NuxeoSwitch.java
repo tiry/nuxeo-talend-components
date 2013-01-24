@@ -19,6 +19,7 @@ import org.talend.core.model.metadata.builder.connection.Connection;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.properties.Item;
 
+import org.talend.core.model.properties.Property;
 import orgomg.cwm.foundation.softwaredeployment.DataManager;
 import orgomg.cwm.foundation.softwaredeployment.DataProvider;
 import orgomg.cwm.foundation.softwaredeployment.DeployedComponent;
@@ -124,6 +125,21 @@ public class NuxeoSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case NuxeoPackage.AUTOMATION_OPERATION: {
+				AutomationOperation automationOperation = (AutomationOperation)theEObject;
+				T result = caseAutomationOperation(automationOperation);
+				if (result == null) result = caseItem(automationOperation);
+				if (result == null) result = caseProperty(automationOperation);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NuxeoPackage.NUXEO_SCHEMA: {
+				NuxeoSchema nuxeoSchema = (NuxeoSchema)theEObject;
+				T result = caseNuxeoSchema(nuxeoSchema);
+				if (result == null) result = caseProperty(nuxeoSchema);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -155,6 +171,36 @@ public class NuxeoSwitch<T> {
 	 * @generated
 	 */
 	public T caseNuxeoConnection(NuxeoConnection object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Automation Operation</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Automation Operation</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseAutomationOperation(AutomationOperation object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Schema</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Schema</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNuxeoSchema(NuxeoSchema object) {
 		return null;
 	}
 
@@ -320,6 +366,21 @@ public class NuxeoSwitch<T> {
 	 * @generated
 	 */
 	public T caseConnection(Connection object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Property</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Property</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseProperty(Property object) {
 		return null;
 	}
 

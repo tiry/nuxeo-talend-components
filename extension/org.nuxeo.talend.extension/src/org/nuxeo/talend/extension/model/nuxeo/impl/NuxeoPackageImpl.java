@@ -12,14 +12,17 @@ import org.eclipse.emf.ecore.EPackage;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
+import org.nuxeo.talend.extension.model.nuxeo.AutomationOperation;
 import org.nuxeo.talend.extension.model.nuxeo.NuxeoConnection;
 import org.nuxeo.talend.extension.model.nuxeo.NuxeoConnectionItem;
 import org.nuxeo.talend.extension.model.nuxeo.NuxeoFactory;
 import org.nuxeo.talend.extension.model.nuxeo.NuxeoPackage;
 
+import org.nuxeo.talend.extension.model.nuxeo.NuxeoSchema;
 import org.talend.core.model.metadata.builder.connection.ConnectionPackage;
 
 import org.talend.core.model.properties.PropertiesPackage;
+import orgomg.cwm.objectmodel.core.CorePackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -41,6 +44,20 @@ public class NuxeoPackageImpl extends EPackageImpl implements NuxeoPackage {
 	 * @generated
 	 */
 	private EClass nuxeoConnectionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass automationOperationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass nuxeoSchemaEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -192,6 +209,42 @@ public class NuxeoPackageImpl extends EPackageImpl implements NuxeoPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getAutomationOperation() {
+		return automationOperationEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAutomationOperation_OperationId() {
+		return (EAttribute)automationOperationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAutomationOperation_Signature() {
+		return (EAttribute)automationOperationEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getNuxeoSchema() {
+		return nuxeoSchemaEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public NuxeoFactory getNuxeoFactory() {
 		return (NuxeoFactory)getEFactoryInstance();
 	}
@@ -225,6 +278,12 @@ public class NuxeoPackageImpl extends EPackageImpl implements NuxeoPackage {
 		createEAttribute(nuxeoConnectionEClass, NUXEO_CONNECTION__PASSWORD);
 		createEAttribute(nuxeoConnectionEClass, NUXEO_CONNECTION__REPOSITORY_NAME);
 		createEAttribute(nuxeoConnectionEClass, NUXEO_CONNECTION__CONTEXT_PATH);
+
+		automationOperationEClass = createEClass(AUTOMATION_OPERATION);
+		createEAttribute(automationOperationEClass, AUTOMATION_OPERATION__OPERATION_ID);
+		createEAttribute(automationOperationEClass, AUTOMATION_OPERATION__SIGNATURE);
+
+		nuxeoSchemaEClass = createEClass(NUXEO_SCHEMA);
 	}
 
 	/**
@@ -253,6 +312,7 @@ public class NuxeoPackageImpl extends EPackageImpl implements NuxeoPackage {
 		// Obtain other dependent packages
 		PropertiesPackage thePropertiesPackage = (PropertiesPackage)EPackage.Registry.INSTANCE.getEPackage(PropertiesPackage.eNS_URI);
 		ConnectionPackage theConnectionPackage = (ConnectionPackage)EPackage.Registry.INSTANCE.getEPackage(ConnectionPackage.eNS_URI);
+		CorePackage theCorePackage = (CorePackage)EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI);
 
 		// Create type parameters
 
@@ -261,18 +321,27 @@ public class NuxeoPackageImpl extends EPackageImpl implements NuxeoPackage {
 		// Add supertypes to classes
 		nuxeoConnectionItemEClass.getESuperTypes().add(thePropertiesPackage.getConnectionItem());
 		nuxeoConnectionEClass.getESuperTypes().add(theConnectionPackage.getConnection());
+		automationOperationEClass.getESuperTypes().add(thePropertiesPackage.getItem());
+		automationOperationEClass.getESuperTypes().add(thePropertiesPackage.getProperty());
+		nuxeoSchemaEClass.getESuperTypes().add(thePropertiesPackage.getProperty());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(nuxeoConnectionItemEClass, NuxeoConnectionItem.class, "NuxeoConnectionItem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(nuxeoConnectionEClass, NuxeoConnection.class, "NuxeoConnection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getNuxeoConnection_Valid(), ecorePackage.getEBoolean(), "valid", null, 0, 1, NuxeoConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getNuxeoConnection_Host(), ecorePackage.getEString(), "Host", "8080", 0, 1, NuxeoConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getNuxeoConnection_Port(), ecorePackage.getEString(), "Port", "localhost", 0, 1, NuxeoConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNuxeoConnection_Host(), ecorePackage.getEString(), "Host", "localhost", 0, 1, NuxeoConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNuxeoConnection_Port(), ecorePackage.getEString(), "Port", "8080", 0, 1, NuxeoConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getNuxeoConnection_Username(), ecorePackage.getEString(), "Username", "Administrator", 0, 1, NuxeoConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getNuxeoConnection_Password(), ecorePackage.getEString(), "Password", "Administrator", 0, 1, NuxeoConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getNuxeoConnection_RepositoryName(), ecorePackage.getEString(), "RepositoryName", "default", 0, 1, NuxeoConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getNuxeoConnection_ContextPath(), ecorePackage.getEString(), "ContextPath", "nuxeo", 0, 1, NuxeoConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(automationOperationEClass, AutomationOperation.class, "AutomationOperation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getAutomationOperation_OperationId(), theCorePackage.getString(), "operationId", null, 0, 1, AutomationOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAutomationOperation_Signature(), theCorePackage.getString(), "signature", null, 0, 1, AutomationOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(nuxeoSchemaEClass, NuxeoSchema.class, "NuxeoSchema", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

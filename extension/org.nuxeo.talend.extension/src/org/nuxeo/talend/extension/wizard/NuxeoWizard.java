@@ -1,7 +1,12 @@
 package org.nuxeo.talend.extension.wizard;
 
 import org.apache.log4j.Logger;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRunnable;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
@@ -9,8 +14,11 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWizard;
+import org.nuxeo.talend.extension.NuxeoRepositoryNodeType;
+import org.nuxeo.talend.extension.NuxeoServerSubTreeBuilder;
 import org.nuxeo.talend.extension.model.nuxeo.NuxeoConnection;
 import org.nuxeo.talend.extension.model.nuxeo.NuxeoFactory;
+import org.talend.commons.ui.runtime.exception.MessageBoxExceptionHandler;
 import org.talend.commons.ui.runtime.image.ECoreImage;
 import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
@@ -31,9 +39,11 @@ import org.talend.core.repository.utils.TDQServiceRegister;
 import org.talend.core.runtime.CoreRuntimePlugin;
 import org.talend.designer.core.IDesignerCoreService;
 import org.talend.repository.model.IProxyRepositoryFactory;
+import org.talend.repository.model.IRepositoryNode;
 import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.model.RepositoryNodeUtilities;
 import org.talend.repository.model.StableRepositoryNode;
+import org.talend.repository.model.IRepositoryNode.ENodeType;
 import org.talend.repository.ui.utils.ConnectionContextHelper;
 import org.talend.repository.ui.wizards.CheckLastVersionRepositoryWizard;
 import org.talend.repository.ui.wizards.PropertiesWizardPage;
@@ -68,6 +78,8 @@ public class NuxeoWizard extends CheckLastVersionRepositoryWizard implements INe
 
     private RepositoryNode node;
 
+    protected static final boolean BUILD_NXSUBTREE_AT_CREATION = true;
+    
     /**
      * Constructor for DatabaseWizard. Analyse Iselection to extract DatabaseConnection and the pathToSave. Start the
      * Lock Strategy.
@@ -93,6 +105,7 @@ public class NuxeoWizard extends CheckLastVersionRepositoryWizard implements INe
         switch (node.getType()) {
         case SIMPLE_FOLDER:
         case SYSTEM_FOLDER:
+        	System.out.println("NXWizard Start on System Folder");
             connection = NuxeoFactory.eINSTANCE.createNuxeoConnection();
             connectionProperty = PropertiesFactory.eINSTANCE.createProperty();
             connectionProperty.setAuthor(((RepositoryContext) CoreRuntimePlugin.getInstance().getContext()
@@ -106,6 +119,8 @@ public class NuxeoWizard extends CheckLastVersionRepositoryWizard implements INe
             break;
 
         case REPOSITORY_ELEMENT:
+        	// DEAD code !
+        	System.out.println("NXWizard Start on repository element");
             connection = (NuxeoConnection) ((ConnectionItem) node.getObject().getProperty().getItem()).getConnection();
             connectionProperty = node.getObject().getProperty();
             connectionItem = (ConnectionItem) node.getObject().getProperty().getItem();
@@ -171,8 +186,8 @@ public class NuxeoWizard extends CheckLastVersionRepositoryWizard implements INe
         }
         addPage(propertiesWizardPage);
         addPage(nuxeoWizardPage);
-    }
-
+    }    
+    
     /**
      * This method is called when 'Finish' button is pressed in the wizard. Save metadata close Lock Strategy and close
      * wizard.
@@ -191,24 +206,67 @@ public class NuxeoWizard extends CheckLastVersionRepositoryWizard implements INe
                     String nextId = factory.getNextId();
                     connectionProperty.setId(nextId);
                     
-
                     String displayName = connectionProperty.getDisplayName();
                     connectionProperty.setLabel(displayName);
                     this.connection.setName(displayName);
                     this.connection.setLabel(displayName);
                     
-                    factory.create(connectionItem, propertiesWizardPage.getDestinationPath());
-                    
-                    IPath npath = RepositoryNodeUtilities.getPath(node);
-                    
-                    System.out.println("create additional sub nodes on node " + node.getType().toString() + " on path " + npath.toOSString());
-                    
-                    
-                    RepositoryNode opNode = new StableRepositoryNode(node,
-                            Messages.getString("Automation Operations"), ECoreImage.FOLDER_CLOSE_ICON); //$NON-NLS-1$
-             	    node.getChildren().add(opNode);                 	                 	                	                	    
+                    IWorkspaceRunnable runnable = new IWorkspaceRunnable() {
 
-             	    
+						@Override
+						public void run(IProgressMonitor monitor)
+								throws CoreException {
+							try {
+								System.out.println("create Nuxeo Server node");
+								factory.create(connectionItem, propertiesWizardPage.getDestinationPath());								
+																
+								if (node.getType().equals(NuxeoRepositoryNodeType.NUXEO_NODE)) {
+									System.out.println("Build sub tree on Nuxeo node " + node.getLabel() + " (" + node.getType() + ")");
+									NuxeoServerSubTreeBuilder.build(node);	
+								} else {
+									
+									IRepositoryNode targetParentNode = node;
+									
+									if (targetParentNode.getChildren().size()==1) {
+										if (targetParentNode.getChildren().get(0).getLabel().equals("Nuxeo Platform")) {
+											System.out.println("Skip intermediate node ...");
+											targetParentNode =targetParentNode.getChildren().get(0); 
+										}
+									}									
+									
+									System.out.println("Build sub tree on children nodes of " + targetParentNode.getLabel() + " (" + node.getType() + ")");
+									
+									for (IRepositoryNode child : targetParentNode.getChildren()) {
+										if (child.getChildren().size()==0) {
+											System.out.println("create children for " + child.getLabel() + " (" + targetParentNode.getType() + ")");
+											NuxeoServerSubTreeBuilder.build((RepositoryNode)child);
+										} else {
+											System.out.println("skip children gen for " + child.getLabel() + " (" + targetParentNode.getType() + ")");
+										}
+									}		
+								}
+								
+								IPath npath = RepositoryNodeUtilities.getPath(node);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}							
+						}
+                    	
+                    };
+
+                    if (BUILD_NXSUBTREE_AT_CREATION) {                    
+	                    IWorkspace workspace = ResourcesPlugin.getWorkspace();
+	                    try {
+	                        workspace.run(runnable, workspace.getRoot(), IWorkspace.AVOID_UPDATE, null);
+	                    } catch (CoreException e) {
+	                        e.printStackTrace();
+	                    	MessageBoxExceptionHandler.process(e.getCause());                        
+	                    }
+                    }
+                    
+                    //factory.create(connectionItem, propertiesWizardPage.getDestinationPath());                    
+                    //IPath npath = RepositoryNodeUtilities.getPath(node);
+
              	                 	    
                 } else {
                 	// update

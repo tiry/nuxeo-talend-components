@@ -65,7 +65,7 @@ public class NuxeoConnectionImpl extends ConnectionImpl implements NuxeoConnecti
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String HOST_EDEFAULT = "8080";
+	protected static final String HOST_EDEFAULT = "localhost";
 
 	/**
 	 * The cached value of the '{@link #getHost() <em>Host</em>}' attribute.
@@ -85,7 +85,7 @@ public class NuxeoConnectionImpl extends ConnectionImpl implements NuxeoConnecti
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String PORT_EDEFAULT = "localhost";
+	protected static final String PORT_EDEFAULT = "8080";
 
 	/**
 	 * The cached value of the '{@link #getPort() <em>Port</em>}' attribute.

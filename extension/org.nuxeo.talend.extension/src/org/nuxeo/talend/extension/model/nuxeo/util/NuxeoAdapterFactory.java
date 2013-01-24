@@ -21,6 +21,7 @@ import org.talend.core.model.metadata.builder.connection.Connection;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.properties.Item;
 
+import org.talend.core.model.properties.Property;
 import orgomg.cwm.foundation.softwaredeployment.DataManager;
 import orgomg.cwm.foundation.softwaredeployment.DataProvider;
 import orgomg.cwm.foundation.softwaredeployment.DeployedComponent;
@@ -94,6 +95,14 @@ public class NuxeoAdapterFactory extends AdapterFactoryImpl {
 				return createNuxeoConnectionAdapter();
 			}
 			@Override
+			public Adapter caseAutomationOperation(AutomationOperation object) {
+				return createAutomationOperationAdapter();
+			}
+			@Override
+			public Adapter caseNuxeoSchema(NuxeoSchema object) {
+				return createNuxeoSchemaAdapter();
+			}
+			@Override
 			public Adapter caseItem(Item object) {
 				return createItemAdapter();
 			}
@@ -136,6 +145,10 @@ public class NuxeoAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseConnection(Connection object) {
 				return createConnectionAdapter();
+			}
+			@Override
+			public Adapter caseProperty(Property object) {
+				return createPropertyAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -182,6 +195,34 @@ public class NuxeoAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createNuxeoConnectionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.nuxeo.talend.extension.model.nuxeo.AutomationOperation <em>Automation Operation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.nuxeo.talend.extension.model.nuxeo.AutomationOperation
+	 * @generated
+	 */
+	public Adapter createAutomationOperationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.nuxeo.talend.extension.model.nuxeo.NuxeoSchema <em>Schema</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.nuxeo.talend.extension.model.nuxeo.NuxeoSchema
+	 * @generated
+	 */
+	public Adapter createNuxeoSchemaAdapter() {
 		return null;
 	}
 
@@ -336,6 +377,20 @@ public class NuxeoAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createConnectionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.talend.core.model.properties.Property <em>Property</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.talend.core.model.properties.Property
+	 * @generated
+	 */
+	public Adapter createPropertyAdapter() {
 		return null;
 	}
 

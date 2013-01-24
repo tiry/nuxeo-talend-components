@@ -44,6 +44,24 @@ public interface NuxeoFactory extends EFactory {
 	NuxeoConnection createNuxeoConnection();
 
 	/**
+	 * Returns a new object of class '<em>Automation Operation</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Automation Operation</em>'.
+	 * @generated
+	 */
+	AutomationOperation createAutomationOperation();
+
+	/**
+	 * Returns a new object of class '<em>Schema</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Schema</em>'.
+	 * @generated
+	 */
+	NuxeoSchema createNuxeoSchema();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

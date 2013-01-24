@@ -59,7 +59,7 @@ public interface NuxeoConnection extends Connection {
 
 	/**
 	 * Returns the value of the '<em><b>Host</b></em>' attribute.
-	 * The default value is <code>"8080"</code>.
+	 * The default value is <code>"localhost"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Host</em>' attribute isn't clear,
@@ -69,7 +69,7 @@ public interface NuxeoConnection extends Connection {
 	 * @return the value of the '<em>Host</em>' attribute.
 	 * @see #setHost(String)
 	 * @see org.nuxeo.talend.extension.model.nuxeo.NuxeoPackage#getNuxeoConnection_Host()
-	 * @model default="8080"
+	 * @model default="localhost"
 	 * @generated
 	 */
 	String getHost();
@@ -86,7 +86,7 @@ public interface NuxeoConnection extends Connection {
 
 	/**
 	 * Returns the value of the '<em><b>Port</b></em>' attribute.
-	 * The default value is <code>"localhost"</code>.
+	 * The default value is <code>"8080"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Port</em>' attribute isn't clear,
@@ -96,7 +96,7 @@ public interface NuxeoConnection extends Connection {
 	 * @return the value of the '<em>Port</em>' attribute.
 	 * @see #setPort(String)
 	 * @see org.nuxeo.talend.extension.model.nuxeo.NuxeoPackage#getNuxeoConnection_Port()
-	 * @model default="localhost"
+	 * @model default="8080"
 	 * @generated
 	 */
 	String getPort();
