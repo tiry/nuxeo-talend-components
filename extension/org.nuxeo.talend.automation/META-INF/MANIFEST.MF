@@ -3,7 +3,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Automation
 Bundle-SymbolicName: org.nuxeo.talend.automation
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: org.nuxeo.talend.automation.Activator
 Bundle-Vendor: Nuxeo
 Require-Bundle: org.eclipse.core.runtime
 Bundle-ActivationPolicy: lazy
@@ -13,7 +12,9 @@ Bundle-ClassPath: lib/commons-logging-1.1.jar,
  lib/httpcore-4.1.jar,
  lib/jackson-core-asl-1.8.1.jar,
  lib/jackson-mapper-asl-1.8.1.jar,
- lib/nuxeo-automation-client-5.7-SNAPSHOT.jar
+ lib/mail-1.4.jar,
+ lib/nuxeo-automation-client-5.7-SNAPSHOT.jar,
+ .
 Export-Package: org.nuxeo.ecm.automation.client,
  org.nuxeo.ecm.automation.client.adapters,
  org.nuxeo.ecm.automation.client.jaxrs.impl,

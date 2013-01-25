@@ -322,7 +322,6 @@ public class NuxeoPackageImpl extends EPackageImpl implements NuxeoPackage {
 		nuxeoConnectionItemEClass.getESuperTypes().add(thePropertiesPackage.getConnectionItem());
 		nuxeoConnectionEClass.getESuperTypes().add(theConnectionPackage.getConnection());
 		automationOperationEClass.getESuperTypes().add(thePropertiesPackage.getItem());
-		automationOperationEClass.getESuperTypes().add(thePropertiesPackage.getProperty());
 		nuxeoSchemaEClass.getESuperTypes().add(thePropertiesPackage.getProperty());
 
 		// Initialize classes and features; add operations and parameters

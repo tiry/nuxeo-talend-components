@@ -26,7 +26,7 @@ import org.talend.core.model.properties.Property;
  * @model
  * @generated
  */
-public interface AutomationOperation extends Item, Property {
+public interface AutomationOperation extends Item {
 	/**
 	 * Returns the value of the '<em><b>Operation Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->

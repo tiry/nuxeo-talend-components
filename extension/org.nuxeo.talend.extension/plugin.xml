@@ -94,8 +94,8 @@
    <extension
          point="org.talend.core.repositoryContextualsActions">
     <Action
-            class="org.nuxeo.talend.extension.NuxeoAction"
-            id="org.nuxeo.talend.extension.NuxeoAction"
+            class="org.nuxeo.talend.extension.NuxeoRepositoryContextAction"
+            id="org.nuxeo.talend.extension.NuxeoRepositoryContextAction"
             isEditAction="true"
             isReadAction="true"
             level="10"

@@ -129,7 +129,6 @@ public class NuxeoSwitch<T> {
 				AutomationOperation automationOperation = (AutomationOperation)theEObject;
 				T result = caseAutomationOperation(automationOperation);
 				if (result == null) result = caseItem(automationOperation);
-				if (result == null) result = caseProperty(automationOperation);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}

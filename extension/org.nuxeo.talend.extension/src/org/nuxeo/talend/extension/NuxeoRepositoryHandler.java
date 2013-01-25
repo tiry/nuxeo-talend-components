@@ -69,7 +69,7 @@ public class NuxeoRepositoryHandler implements IRepositoryContentHandler {
         	itemResource.getContents().add(nuxeoItem.getConnection());
         	return itemResource;
         } else {
-        	System.out.println("calling create on wrong type");
+        	LogHelper.debug("calling create on wrong type");
         }
         return null;
 
@@ -173,42 +173,12 @@ public class NuxeoRepositoryHandler implements IRepositoryContentHandler {
     @Override
     public void addNode(ERepositoryObjectType type, RepositoryNode recBinNode, IRepositoryViewObject repositoryObject,
             RepositoryNode node) {
-    	
-    	System.out.println("Adding Nodes of type " + type.getType() + " with id=" + node.getId() + " and Label " + node.getLabel());
-    	
-    	
-    	
-    	if(NuxeoRepositoryNodeType.repositoryNuxeoType.equals(type)) {
-    	
-    		/*
-    		Folder folderRepositoryObject = new Folder(repositoryObject., ENodeType.STABLE_SYSTEM_FOLDER);
-			
-	        PortRepositoryObject portRepositoryObject = new PortRepositoryObject(repositoryObject, port);
-	        RepositoryNode portNode = new RepositoryNode(portRepositoryObject, node, ENodeType.REPOSITORY_ELEMENT); //$NON-NLS-1$
-	        portNode.setProperties(EProperties.LABEL, port.getName());
-	        portNode.setProperties(EProperties.CONTENT_TYPE, ERepositoryObjectType.SERVICESPORT);
-	        node.getChildren().add(portNode);
-	        //
-	        List<ServiceOperation> listOperation = port.getServiceOperation();
-	        for (ServiceOperation operation : listOperation) {
-	            OperationRepositoryObject operationRepositoryObject = new OperationRepositoryObject(repositoryObject,
-	                    operation);
-	            RepositoryNode operationNode = new RepositoryNode(operationRepositoryObject, portNode,
-	                    ENodeType.REPOSITORY_ELEMENT); //$NON-NLS-1$
-	            operationNode.setProperties(EProperties.LABEL, operation.getLabel());
-	            operationNode.setProperties(EProperties.CONTENT_TYPE, ERepositoryObjectType.SERVICESOPERATION);
-	            portNode.getChildren().add(operationNode);
-	        }*/
-    }
-        
-    	
-    	if(NuxeoRepositoryNodeType.repositoryNuxeoType.equals(type)) {
-    		System.out.println("Process on event to create SubNode on Nuxeo nodes of type " + type.getType() + " with id=" + node.getId());
-    		
+  
+    	if(NuxeoRepositoryNodeType.repositoryNuxeoType.equals(type) && NuxeoServerSubTreeBuilder.BUILD_NXSUBTREE_VIA_EVENT) {
+    		LogHelper.debug("Process on event to create SubNode on Nuxeo nodes of type " + type.getType() + " with id=" + node.getId() + " and label=" + node.getLabel());    		
     		try {
-				NuxeoServerSubTreeBuilder.build(node);
+				NuxeoServerSubTreeBuilder.build(node, repositoryObject);
 			} catch (PersistenceException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}    	
     	}  	    
@@ -216,7 +186,7 @@ public class NuxeoRepositoryHandler implements IRepositoryContentHandler {
     
     @Override
     public void addContents(Collection<EObject> collection, Resource resource) {
-    	System.out.println("Adding Content !!!!");
+    	LogHelper.debug("Adding Content !!!!");
     }
 
     @Override

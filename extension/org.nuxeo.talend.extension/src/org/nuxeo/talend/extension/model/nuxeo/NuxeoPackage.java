@@ -652,148 +652,13 @@ public interface NuxeoPackage extends EPackage {
 	int AUTOMATION_OPERATION__FILE_EXTENSION = PropertiesPackage.ITEM__FILE_EXTENSION;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AUTOMATION_OPERATION__ID = PropertiesPackage.ITEM_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Label</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AUTOMATION_OPERATION__LABEL = PropertiesPackage.ITEM_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Purpose</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AUTOMATION_OPERATION__PURPOSE = PropertiesPackage.ITEM_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AUTOMATION_OPERATION__DESCRIPTION = PropertiesPackage.ITEM_FEATURE_COUNT + 3;
-
-	/**
-	 * The feature id for the '<em><b>Creation Date</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AUTOMATION_OPERATION__CREATION_DATE = PropertiesPackage.ITEM_FEATURE_COUNT + 4;
-
-	/**
-	 * The feature id for the '<em><b>Modification Date</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AUTOMATION_OPERATION__MODIFICATION_DATE = PropertiesPackage.ITEM_FEATURE_COUNT + 5;
-
-	/**
-	 * The feature id for the '<em><b>Version</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AUTOMATION_OPERATION__VERSION = PropertiesPackage.ITEM_FEATURE_COUNT + 6;
-
-	/**
-	 * The feature id for the '<em><b>Status Code</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AUTOMATION_OPERATION__STATUS_CODE = PropertiesPackage.ITEM_FEATURE_COUNT + 7;
-
-	/**
-	 * The feature id for the '<em><b>Item</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AUTOMATION_OPERATION__ITEM = PropertiesPackage.ITEM_FEATURE_COUNT + 8;
-
-	/**
-	 * The feature id for the '<em><b>Author</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AUTOMATION_OPERATION__AUTHOR = PropertiesPackage.ITEM_FEATURE_COUNT + 9;
-
-	/**
-	 * The feature id for the '<em><b>Informations</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AUTOMATION_OPERATION__INFORMATIONS = PropertiesPackage.ITEM_FEATURE_COUNT + 10;
-
-	/**
-	 * The feature id for the '<em><b>Max Information Level</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AUTOMATION_OPERATION__MAX_INFORMATION_LEVEL = PropertiesPackage.ITEM_FEATURE_COUNT + 11;
-
-	/**
-	 * The feature id for the '<em><b>Old Status Code</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AUTOMATION_OPERATION__OLD_STATUS_CODE = PropertiesPackage.ITEM_FEATURE_COUNT + 12;
-
-	/**
-	 * The feature id for the '<em><b>Additional Properties</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AUTOMATION_OPERATION__ADDITIONAL_PROPERTIES = PropertiesPackage.ITEM_FEATURE_COUNT + 13;
-
-	/**
-	 * The feature id for the '<em><b>Display Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AUTOMATION_OPERATION__DISPLAY_NAME = PropertiesPackage.ITEM_FEATURE_COUNT + 14;
-
-	/**
 	 * The feature id for the '<em><b>Operation Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int AUTOMATION_OPERATION__OPERATION_ID = PropertiesPackage.ITEM_FEATURE_COUNT + 15;
+	int AUTOMATION_OPERATION__OPERATION_ID = PropertiesPackage.ITEM_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Signature</b></em>' attribute.
@@ -802,7 +667,7 @@ public interface NuxeoPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int AUTOMATION_OPERATION__SIGNATURE = PropertiesPackage.ITEM_FEATURE_COUNT + 16;
+	int AUTOMATION_OPERATION__SIGNATURE = PropertiesPackage.ITEM_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Automation Operation</em>' class.
@@ -811,7 +676,7 @@ public interface NuxeoPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int AUTOMATION_OPERATION_FEATURE_COUNT = PropertiesPackage.ITEM_FEATURE_COUNT + 17;
+	int AUTOMATION_OPERATION_FEATURE_COUNT = PropertiesPackage.ITEM_FEATURE_COUNT + 2;
 
 
 	/**
