@@ -6,12 +6,20 @@
  */
 package org.nuxeo.talend.extension.model.nuxeo.impl;
 
+import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.nuxeo.talend.extension.model.nuxeo.AutomationOperation;
 import org.nuxeo.talend.extension.model.nuxeo.NuxeoConnection;
 import org.nuxeo.talend.extension.model.nuxeo.NuxeoPackage;
 
@@ -31,6 +39,7 @@ import org.talend.core.model.metadata.builder.connection.impl.ConnectionImpl;
  *   <li>{@link org.nuxeo.talend.extension.model.nuxeo.impl.NuxeoConnectionImpl#getPassword <em>Password</em>}</li>
  *   <li>{@link org.nuxeo.talend.extension.model.nuxeo.impl.NuxeoConnectionImpl#getRepositoryName <em>Repository Name</em>}</li>
  *   <li>{@link org.nuxeo.talend.extension.model.nuxeo.impl.NuxeoConnectionImpl#getContextPath <em>Context Path</em>}</li>
+ *   <li>{@link org.nuxeo.talend.extension.model.nuxeo.impl.NuxeoConnectionImpl#getOperations <em>Operations</em>}</li>
  * </ul>
  * </p>
  *
@@ -176,6 +185,16 @@ public class NuxeoConnectionImpl extends ConnectionImpl implements NuxeoConnecti
 	 * @ordered
 	 */
 	protected String contextPath = CONTEXT_PATH_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getOperations() <em>Operations</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOperations()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<AutomationOperation> operations;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -348,6 +367,32 @@ public class NuxeoConnectionImpl extends ConnectionImpl implements NuxeoConnecti
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<AutomationOperation> getOperations() {
+		if (operations == null) {
+			operations = new EObjectContainmentEList<AutomationOperation>(AutomationOperation.class, this, NuxeoPackage.NUXEO_CONNECTION__OPERATIONS);
+		}
+		return operations;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case NuxeoPackage.NUXEO_CONNECTION__OPERATIONS:
+				return ((InternalEList<?>)getOperations()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -365,6 +410,8 @@ public class NuxeoConnectionImpl extends ConnectionImpl implements NuxeoConnecti
 				return getRepositoryName();
 			case NuxeoPackage.NUXEO_CONNECTION__CONTEXT_PATH:
 				return getContextPath();
+			case NuxeoPackage.NUXEO_CONNECTION__OPERATIONS:
+				return getOperations();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -374,6 +421,7 @@ public class NuxeoConnectionImpl extends ConnectionImpl implements NuxeoConnecti
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
@@ -397,6 +445,10 @@ public class NuxeoConnectionImpl extends ConnectionImpl implements NuxeoConnecti
 				return;
 			case NuxeoPackage.NUXEO_CONNECTION__CONTEXT_PATH:
 				setContextPath((String)newValue);
+				return;
+			case NuxeoPackage.NUXEO_CONNECTION__OPERATIONS:
+				getOperations().clear();
+				getOperations().addAll((Collection<? extends AutomationOperation>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -431,6 +483,9 @@ public class NuxeoConnectionImpl extends ConnectionImpl implements NuxeoConnecti
 			case NuxeoPackage.NUXEO_CONNECTION__CONTEXT_PATH:
 				setContextPath(CONTEXT_PATH_EDEFAULT);
 				return;
+			case NuxeoPackage.NUXEO_CONNECTION__OPERATIONS:
+				getOperations().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -457,6 +512,8 @@ public class NuxeoConnectionImpl extends ConnectionImpl implements NuxeoConnecti
 				return REPOSITORY_NAME_EDEFAULT == null ? repositoryName != null : !REPOSITORY_NAME_EDEFAULT.equals(repositoryName);
 			case NuxeoPackage.NUXEO_CONNECTION__CONTEXT_PATH:
 				return CONTEXT_PATH_EDEFAULT == null ? contextPath != null : !CONTEXT_PATH_EDEFAULT.equals(contextPath);
+			case NuxeoPackage.NUXEO_CONNECTION__OPERATIONS:
+				return operations != null && !operations.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

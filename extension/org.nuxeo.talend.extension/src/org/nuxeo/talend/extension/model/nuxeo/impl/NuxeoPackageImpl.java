@@ -10,6 +10,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import org.nuxeo.talend.extension.model.nuxeo.AutomationOperation;
@@ -209,6 +210,15 @@ public class NuxeoPackageImpl extends EPackageImpl implements NuxeoPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getNuxeoConnection_Operations() {
+		return (EReference)nuxeoConnectionEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getAutomationOperation() {
 		return automationOperationEClass;
 	}
@@ -278,6 +288,7 @@ public class NuxeoPackageImpl extends EPackageImpl implements NuxeoPackage {
 		createEAttribute(nuxeoConnectionEClass, NUXEO_CONNECTION__PASSWORD);
 		createEAttribute(nuxeoConnectionEClass, NUXEO_CONNECTION__REPOSITORY_NAME);
 		createEAttribute(nuxeoConnectionEClass, NUXEO_CONNECTION__CONTEXT_PATH);
+		createEReference(nuxeoConnectionEClass, NUXEO_CONNECTION__OPERATIONS);
 
 		automationOperationEClass = createEClass(AUTOMATION_OPERATION);
 		createEAttribute(automationOperationEClass, AUTOMATION_OPERATION__OPERATION_ID);
@@ -335,6 +346,7 @@ public class NuxeoPackageImpl extends EPackageImpl implements NuxeoPackage {
 		initEAttribute(getNuxeoConnection_Password(), ecorePackage.getEString(), "Password", "Administrator", 0, 1, NuxeoConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getNuxeoConnection_RepositoryName(), ecorePackage.getEString(), "RepositoryName", "default", 0, 1, NuxeoConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getNuxeoConnection_ContextPath(), ecorePackage.getEString(), "ContextPath", "nuxeo", 0, 1, NuxeoConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getNuxeoConnection_Operations(), this.getAutomationOperation(), null, "Operations", null, 0, -1, NuxeoConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(automationOperationEClass, AutomationOperation.class, "AutomationOperation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getAutomationOperation_OperationId(), theCorePackage.getString(), "operationId", null, 0, 1, AutomationOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -16,7 +16,12 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRunnable;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.wizard.IWizard;
@@ -27,6 +32,7 @@ import org.nuxeo.talend.extension.model.nuxeo.NuxeoFactory;
 import org.nuxeo.talend.extension.wizard.Messages;
 import org.talend.commons.exception.PersistenceException;
 import org.talend.commons.ui.runtime.exception.ExceptionHandler;
+import org.talend.commons.ui.runtime.exception.MessageBoxExceptionHandler;
 import org.talend.commons.ui.runtime.image.ECoreImage;
 import org.talend.commons.ui.runtime.image.IImage;
 import org.talend.core.model.properties.ConnectionItem;
@@ -171,16 +177,55 @@ public class NuxeoRepositoryHandler implements IRepositoryContentHandler {
     }
 
     @Override
-    public void addNode(ERepositoryObjectType type, RepositoryNode recBinNode, IRepositoryViewObject repositoryObject,
-            RepositoryNode node) {
+    public void addNode(ERepositoryObjectType type, RepositoryNode recBinNode, final IRepositoryViewObject repositoryObject,
+            final RepositoryNode node) {
   
     	if(NuxeoRepositoryNodeType.repositoryNuxeoType.equals(type) && NuxeoServerSubTreeBuilder.BUILD_NXSUBTREE_VIA_EVENT) {
-    		LogHelper.debug("Process on event to create SubNode on Nuxeo nodes of type " + type.getType() + " with id=" + node.getId() + " and label=" + node.getLabel());    		
+
+    		LogHelper.debug("Process on event to create SubNode on Nuxeo nodes of type " + type.getType() + " with id=" + node.getId() + " and label=" + node.getLabel());
+    		
+    		String runMode = "Sync";
+    		
     		try {
-				NuxeoServerSubTreeBuilder.build(node, repositoryObject);
-			} catch (PersistenceException e1) {
-				e1.printStackTrace();
-			}    	
+    			
+    			if ("Sync".equals(runMode)) {
+    				NuxeoServerSubTreeBuilder.build(node, repositoryObject);	
+    			} else if ("Async".equals(runMode)) {
+        			Runnable job = new Runnable() {					
+    					@Override
+    					public void run() {
+    		    			try {
+    							NuxeoServerSubTreeBuilder.build(node, repositoryObject);
+    						} catch (PersistenceException e) {
+    							// TODO Auto-generated catch block
+    							e.printStackTrace();
+    						}						
+    					}
+    				};    				
+    				new Thread(job).start();
+    				
+    			} else if ("WorkspaceRunnable".equals(runMode)) {
+    	    		IWorkspaceRunnable runnable = new IWorkspaceRunnable() {
+    					@Override
+    					public void run(IProgressMonitor arg0) throws CoreException {
+    						LogHelper.debug("Create sub nodes in async");
+    						try {
+    							NuxeoServerSubTreeBuilder.build(node, repositoryObject);
+    						} catch (PersistenceException e1) {
+    							e1.printStackTrace();
+    						}   
+    					}
+    	    			 
+    	    		};
+
+    	    		IWorkspace workspace = ResourcesPlugin.getWorkspace();
+  	            	workspace.run(runnable, workspace.getRoot(), IWorkspace.AVOID_UPDATE, null);
+    	    		
+    			}    			    			
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}    		    		
     	}  	    
     }
     

@@ -202,7 +202,7 @@ public class NuxeoWizard extends CheckLastVersionRepositoryWizard implements INe
                     String displayName = connectionProperty.getDisplayName();
                     connectionProperty.setLabel(displayName);
                     this.connection.setName(displayName);
-                    this.connection.setLabel(displayName);
+                    this.connection.setLabel(displayName);                   
                     
                     IWorkspaceRunnable runnable = new IWorkspaceRunnable() {
 

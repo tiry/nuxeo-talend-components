@@ -6,6 +6,7 @@
  */
 package org.nuxeo.talend.extension.model.nuxeo;
 
+import org.eclipse.emf.common.util.EList;
 import org.talend.core.model.metadata.builder.connection.Connection;
 
 /**
@@ -23,6 +24,7 @@ import org.talend.core.model.metadata.builder.connection.Connection;
  *   <li>{@link org.nuxeo.talend.extension.model.nuxeo.NuxeoConnection#getPassword <em>Password</em>}</li>
  *   <li>{@link org.nuxeo.talend.extension.model.nuxeo.NuxeoConnection#getRepositoryName <em>Repository Name</em>}</li>
  *   <li>{@link org.nuxeo.talend.extension.model.nuxeo.NuxeoConnection#getContextPath <em>Context Path</em>}</li>
+ *   <li>{@link org.nuxeo.talend.extension.model.nuxeo.NuxeoConnection#getOperations <em>Operations</em>}</li>
  * </ul>
  * </p>
  *
@@ -218,5 +220,21 @@ public interface NuxeoConnection extends Connection {
 	 * @generated
 	 */
 	void setContextPath(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Operations</b></em>' containment reference list.
+	 * The list contents are of type {@link org.nuxeo.talend.extension.model.nuxeo.AutomationOperation}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Operations</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Operations</em>' containment reference list.
+	 * @see org.nuxeo.talend.extension.model.nuxeo.NuxeoPackage#getNuxeoConnection_Operations()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<AutomationOperation> getOperations();
 
 } // NuxeoConnection

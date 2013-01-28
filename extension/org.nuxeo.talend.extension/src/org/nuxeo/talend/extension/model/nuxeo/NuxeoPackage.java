@@ -10,6 +10,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 
+import org.eclipse.emf.ecore.EReference;
 import org.talend.core.model.metadata.builder.connection.ConnectionPackage;
 
 import org.talend.core.model.properties.PropertiesPackage;
@@ -587,13 +588,22 @@ public interface NuxeoPackage extends EPackage {
 	int NUXEO_CONNECTION__CONTEXT_PATH = ConnectionPackage.CONNECTION_FEATURE_COUNT + 6;
 
 	/**
+	 * The feature id for the '<em><b>Operations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUXEO_CONNECTION__OPERATIONS = ConnectionPackage.CONNECTION_FEATURE_COUNT + 7;
+
+	/**
 	 * The number of structural features of the '<em>Connection</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NUXEO_CONNECTION_FEATURE_COUNT = ConnectionPackage.CONNECTION_FEATURE_COUNT + 7;
+	int NUXEO_CONNECTION_FEATURE_COUNT = ConnectionPackage.CONNECTION_FEATURE_COUNT + 8;
 
 
 	/**
@@ -932,6 +942,17 @@ public interface NuxeoPackage extends EPackage {
 	EAttribute getNuxeoConnection_ContextPath();
 
 	/**
+	 * Returns the meta object for the containment reference list '{@link org.nuxeo.talend.extension.model.nuxeo.NuxeoConnection#getOperations <em>Operations</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Operations</em>'.
+	 * @see org.nuxeo.talend.extension.model.nuxeo.NuxeoConnection#getOperations()
+	 * @see #getNuxeoConnection()
+	 * @generated
+	 */
+	EReference getNuxeoConnection_Operations();
+
+	/**
 	 * Returns the meta object for class '{@link org.nuxeo.talend.extension.model.nuxeo.AutomationOperation <em>Automation Operation</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1070,6 +1091,14 @@ public interface NuxeoPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute NUXEO_CONNECTION__CONTEXT_PATH = eINSTANCE.getNuxeoConnection_ContextPath();
+
+		/**
+		 * The meta object literal for the '<em><b>Operations</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NUXEO_CONNECTION__OPERATIONS = eINSTANCE.getNuxeoConnection_Operations();
 
 		/**
 		 * The meta object literal for the '{@link org.nuxeo.talend.extension.model.nuxeo.impl.AutomationOperationImpl <em>Automation Operation</em>}' class.

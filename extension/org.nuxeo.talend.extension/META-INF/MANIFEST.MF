@@ -47,7 +47,9 @@ Import-Package: org.eclipse.core.resources,
  org.talend.core.model.repository,
  org.talend.core.repository.ui.actions.metadata,
  org.talend.core.repository.utils,
- org.talend.repository.metadata.content
+ org.talend.repository.metadata.content,
+ org.talend.repository.ui.utils,
+ org.talend.repository.ui.wizards
 Export-Package: org.nuxeo.talend.extension.model.nuxeo,
  org.nuxeo.talend.extension.model.nuxeo.impl,
  org.nuxeo.talend.extension.model.nuxeo.util

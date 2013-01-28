@@ -137,7 +137,7 @@ public class NuxeoRepositoryContextAction extends AbstractCreateAction {
 		wizardDialog.open();
 		if (!creation) {
 	            RepositoryManager.refreshSavedNode(repositoryNode);
-	    }
+	    }		
 	}
 
 	@Override
