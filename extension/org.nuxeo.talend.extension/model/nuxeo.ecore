@@ -21,7 +21,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="Operations" upperBound="-1"
         eType="#//AutomationOperation" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AutomationOperation">
+  <eClassifiers xsi:type="ecore:EClass" name="AutomationOperation" eSuperTypes="../../org.talend.model/model/metadata.ecore#//AbstractMetadataObject">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="operationId" eType="ecore:EDataType ../../org.talend.cwm.mip/model/CWM.ecore#//cwm/objectmodel/core/String"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="signature" eType="ecore:EDataType ../../org.talend.cwm.mip/model/CWM.ecore#//cwm/objectmodel/core/String"/>
   </eClassifiers>

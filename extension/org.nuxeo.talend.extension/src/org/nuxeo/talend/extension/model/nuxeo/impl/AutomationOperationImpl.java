@@ -26,6 +26,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.nuxeo.talend.extension.model.nuxeo.AutomationOperation;
 import org.nuxeo.talend.extension.model.nuxeo.NuxeoPackage;
 
+import org.talend.core.model.metadata.builder.connection.Connection;
+import org.talend.core.model.metadata.builder.connection.impl.AbstractMetadataObjectImpl;
+import orgomg.cwm.objectmodel.core.impl.ModelElementImpl;
 import org.talend.core.model.properties.Information;
 import org.talend.core.model.properties.InformationLevel;
 import org.talend.core.model.properties.Item;
@@ -49,7 +52,7 @@ import org.talend.core.model.properties.impl.ItemImpl;
  *
  * @generated
  */
-public class AutomationOperationImpl extends EObjectImpl implements AutomationOperation {
+public class AutomationOperationImpl extends AbstractMetadataObjectImpl implements AutomationOperation {
 	/**
 	 * The default value of the '{@link #getOperationId() <em>Operation Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -237,5 +240,9 @@ public class AutomationOperationImpl extends EObjectImpl implements AutomationOp
 		result.append(')');
 		return result.toString();
 	}
+	
+    public boolean isReadOnly() {
+    	return false;
+    }
 
 } //AutomationOperationImpl

@@ -7,6 +7,7 @@ import org.nuxeo.talend.extension.model.nuxeo.AutomationOperation;
 import org.nuxeo.talend.extension.model.nuxeo.NuxeoConnection;
 import org.nuxeo.talend.extension.model.nuxeo.NuxeoConnectionItem;
 import org.nuxeo.talend.extension.model.nuxeo.NuxeoFactory;
+import org.nuxeo.talend.extension.nodes.NuxeoOperationRepositoryObject;
 import org.nuxeo.talend.extension.wizard.Messages;
 import org.talend.commons.exception.PersistenceException;
 import org.talend.commons.ui.runtime.image.ECoreImage;
@@ -21,11 +22,16 @@ import org.talend.cwm.helper.ConnectionHelper;
 import org.talend.cwm.helper.PackageHelper;
 import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.model.StableRepositoryNode;
+import org.talend.repository.model.IRepositoryNode.ENodeType;
+import org.talend.repository.model.IRepositoryNode.EProperties;
+
 import orgomg.cwm.resource.record.RecordFactory;
 import orgomg.cwm.resource.record.RecordFile;
 
 public class NuxeoServerSubTreeBuilder {
 
+	protected static final boolean USE_STABLE_NODE = false;
+	
 	protected static RepositoryNode mkFolder(RepositoryNode parent,
 			String title, IRepositoryViewObject repositoryObject) {
 
@@ -116,9 +122,19 @@ public class NuxeoServerSubTreeBuilder {
 					.getObject().getProperty().getItem());
 			
 			for (AutomationOperation op : conn.getOperations()) {
-				RepositoryNode operation = new StableRepositoryNode(opNode,
-						Messages.getString(op.getOperationId()),
-						ENuxeoImage.NX_OP);
+				
+				RepositoryNode operation = null;
+				if (USE_STABLE_NODE) {
+					operation = new StableRepositoryNode(opNode,
+							Messages.getString(op.getOperationId()),
+							ENuxeoImage.NX_OP);						
+				} else {
+					NuxeoOperationRepositoryObject ob = new NuxeoOperationRepositoryObject(repositoryObject, op);
+			        operation = new RepositoryNode(ob, opNode, ENodeType.REPOSITORY_ELEMENT);			        
+			        operation.setIcon(ENuxeoImage.NX_OP);
+			        operation.setProperties(EProperties.LABEL, op.getOperationId());
+			        //operation.setProperties(EProperties.CONTENT_TYPE, NuxeoRepositoryNodeType.NUXEO_NODE);		        									
+				}
 				opNode.getChildren().add(operation);
 				operation.setParent(opNode);
 			}

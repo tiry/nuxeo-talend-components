@@ -6,6 +6,8 @@
  */
 package org.nuxeo.talend.extension.model.nuxeo;
 
+import org.talend.core.model.metadata.builder.connection.AbstractMetadataObject;
+import orgomg.cwm.objectmodel.core.ModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.properties.Property;
@@ -27,7 +29,7 @@ import org.talend.core.model.properties.Property;
  * @model
  * @generated
  */
-public interface AutomationOperation extends EObject {
+public interface AutomationOperation extends AbstractMetadataObject {
 	/**
 	 * Returns the value of the '<em><b>Operation Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->

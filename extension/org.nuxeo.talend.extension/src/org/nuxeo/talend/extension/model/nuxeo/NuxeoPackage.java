@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.talend.core.model.metadata.builder.connection.ConnectionPackage;
 
 import org.talend.core.model.properties.PropertiesPackage;
+import orgomg.cwm.objectmodel.core.CorePackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -617,13 +618,247 @@ public interface NuxeoPackage extends EPackage {
 	int AUTOMATION_OPERATION = 2;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__NAME = ConnectionPackage.ABSTRACT_METADATA_OBJECT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Visibility</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__VISIBILITY = ConnectionPackage.ABSTRACT_METADATA_OBJECT__VISIBILITY;
+
+	/**
+	 * The feature id for the '<em><b>Client Dependency</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__CLIENT_DEPENDENCY = ConnectionPackage.ABSTRACT_METADATA_OBJECT__CLIENT_DEPENDENCY;
+
+	/**
+	 * The feature id for the '<em><b>Supplier Dependency</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__SUPPLIER_DEPENDENCY = ConnectionPackage.ABSTRACT_METADATA_OBJECT__SUPPLIER_DEPENDENCY;
+
+	/**
+	 * The feature id for the '<em><b>Constraint</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__CONSTRAINT = ConnectionPackage.ABSTRACT_METADATA_OBJECT__CONSTRAINT;
+
+	/**
+	 * The feature id for the '<em><b>Namespace</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__NAMESPACE = ConnectionPackage.ABSTRACT_METADATA_OBJECT__NAMESPACE;
+
+	/**
+	 * The feature id for the '<em><b>Importer</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__IMPORTER = ConnectionPackage.ABSTRACT_METADATA_OBJECT__IMPORTER;
+
+	/**
+	 * The feature id for the '<em><b>Stereotype</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__STEREOTYPE = ConnectionPackage.ABSTRACT_METADATA_OBJECT__STEREOTYPE;
+
+	/**
+	 * The feature id for the '<em><b>Tagged Value</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__TAGGED_VALUE = ConnectionPackage.ABSTRACT_METADATA_OBJECT__TAGGED_VALUE;
+
+	/**
+	 * The feature id for the '<em><b>Document</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__DOCUMENT = ConnectionPackage.ABSTRACT_METADATA_OBJECT__DOCUMENT;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__DESCRIPTION = ConnectionPackage.ABSTRACT_METADATA_OBJECT__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Responsible Party</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__RESPONSIBLE_PARTY = ConnectionPackage.ABSTRACT_METADATA_OBJECT__RESPONSIBLE_PARTY;
+
+	/**
+	 * The feature id for the '<em><b>Element Node</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__ELEMENT_NODE = ConnectionPackage.ABSTRACT_METADATA_OBJECT__ELEMENT_NODE;
+
+	/**
+	 * The feature id for the '<em><b>Set</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__SET = ConnectionPackage.ABSTRACT_METADATA_OBJECT__SET;
+
+	/**
+	 * The feature id for the '<em><b>Rendered Object</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__RENDERED_OBJECT = ConnectionPackage.ABSTRACT_METADATA_OBJECT__RENDERED_OBJECT;
+
+	/**
+	 * The feature id for the '<em><b>Vocabulary Element</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__VOCABULARY_ELEMENT = ConnectionPackage.ABSTRACT_METADATA_OBJECT__VOCABULARY_ELEMENT;
+
+	/**
+	 * The feature id for the '<em><b>Measurement</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__MEASUREMENT = ConnectionPackage.ABSTRACT_METADATA_OBJECT__MEASUREMENT;
+
+	/**
+	 * The feature id for the '<em><b>Change Request</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__CHANGE_REQUEST = ConnectionPackage.ABSTRACT_METADATA_OBJECT__CHANGE_REQUEST;
+
+	/**
+	 * The feature id for the '<em><b>Dasdl Property</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__DASDL_PROPERTY = ConnectionPackage.ABSTRACT_METADATA_OBJECT__DASDL_PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Properties</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__PROPERTIES = ConnectionPackage.ABSTRACT_METADATA_OBJECT__PROPERTIES;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__ID = ConnectionPackage.ABSTRACT_METADATA_OBJECT__ID;
+
+	/**
+	 * The feature id for the '<em><b>Comment</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__COMMENT = ConnectionPackage.ABSTRACT_METADATA_OBJECT__COMMENT;
+
+	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__LABEL = ConnectionPackage.ABSTRACT_METADATA_OBJECT__LABEL;
+
+	/**
+	 * The feature id for the '<em><b>Read Only</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__READ_ONLY = ConnectionPackage.ABSTRACT_METADATA_OBJECT__READ_ONLY;
+
+	/**
+	 * The feature id for the '<em><b>Synchronised</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__SYNCHRONISED = ConnectionPackage.ABSTRACT_METADATA_OBJECT__SYNCHRONISED;
+
+	/**
+	 * The feature id for the '<em><b>Divergency</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTOMATION_OPERATION__DIVERGENCY = ConnectionPackage.ABSTRACT_METADATA_OBJECT__DIVERGENCY;
+
+	/**
 	 * The feature id for the '<em><b>Operation Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int AUTOMATION_OPERATION__OPERATION_ID = 0;
+	int AUTOMATION_OPERATION__OPERATION_ID = ConnectionPackage.ABSTRACT_METADATA_OBJECT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Signature</b></em>' attribute.
@@ -632,7 +867,7 @@ public interface NuxeoPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int AUTOMATION_OPERATION__SIGNATURE = 1;
+	int AUTOMATION_OPERATION__SIGNATURE = ConnectionPackage.ABSTRACT_METADATA_OBJECT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Automation Operation</em>' class.
@@ -641,7 +876,7 @@ public interface NuxeoPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int AUTOMATION_OPERATION_FEATURE_COUNT = 2;
+	int AUTOMATION_OPERATION_FEATURE_COUNT = ConnectionPackage.ABSTRACT_METADATA_OBJECT_FEATURE_COUNT + 2;
 
 
 	/**

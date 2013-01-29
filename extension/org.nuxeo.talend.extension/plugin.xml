@@ -8,7 +8,7 @@
             viewerId="org.talend.repository.cnf.view">
          <includes>
             <contentExtension
-                  pattern="org.nuxeo.*">
+                  pattern="org.*">
             </contentExtension>            
          </includes>
       </viewerContentBinding>
