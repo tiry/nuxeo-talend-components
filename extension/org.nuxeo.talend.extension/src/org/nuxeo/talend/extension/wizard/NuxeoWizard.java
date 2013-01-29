@@ -12,7 +12,6 @@ import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWizard;
 import org.nuxeo.talend.extension.LogHelper;
-import org.nuxeo.talend.extension.NuxeoRepositoryNodeType;
 import org.nuxeo.talend.extension.NuxeoServerSubTreeBuilder;
 import org.nuxeo.talend.extension.model.nuxeo.NuxeoConnection;
 import org.nuxeo.talend.extension.model.nuxeo.NuxeoFactory;
@@ -36,7 +35,6 @@ import org.talend.core.repository.utils.TDQServiceRegister;
 import org.talend.core.runtime.CoreRuntimePlugin;
 import org.talend.designer.core.IDesignerCoreService;
 import org.talend.repository.model.IProxyRepositoryFactory;
-import org.talend.repository.model.IRepositoryNode;
 import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.model.RepositoryNodeUtilities;
 import org.talend.repository.ui.utils.ConnectionContextHelper;
@@ -210,36 +208,12 @@ public class NuxeoWizard extends CheckLastVersionRepositoryWizard implements INe
 						public void run(IProgressMonitor monitor)
 								throws CoreException {
 							try {
-								LogHelper.debug("create Nuxeo Server node");
-								factory.create(connectionItem, propertiesWizardPage.getDestinationPath());
 								
-								if (NuxeoServerSubTreeBuilder.BUILD_NXSUBTREE_AT_CREATION) {
-									if (node.getType().equals(NuxeoRepositoryNodeType.NUXEO_NODE)) {
-										LogHelper.debug("Build sub tree on Nuxeo node " + node.getLabel() + " (" + node.getType() + ")");
-										NuxeoServerSubTreeBuilder.build(node, null);	
-									} else {
-										
-										IRepositoryNode targetParentNode = node;
-										
-										if (targetParentNode.getChildren().size()==1) {
-											if (targetParentNode.getChildren().get(0).getLabel().equals("Nuxeo Platform")) {
-												LogHelper.debug("Skip intermediate node ...");
-												targetParentNode =targetParentNode.getChildren().get(0); 
-											}
-										}									
-										
-										LogHelper.debug("Build sub tree on children nodes of " + targetParentNode.getLabel() + " (" + node.getType() + ")");
-										
-										for (IRepositoryNode child : targetParentNode.getChildren()) {
-											if (child.getChildren().size()==0) {
-												LogHelper.debug("create children for " + child.getLabel() + " (" + targetParentNode.getType() + ")");
-												NuxeoServerSubTreeBuilder.build((RepositoryNode)child, null);
-											} else {
-												LogHelper.debug("skip children gen for " + child.getLabel() + " (" + targetParentNode.getType() + ")");
-											}
-										}		
-									}
-								}
+								LogHelper.debug("fetch operation from server");
+								NuxeoServerSubTreeBuilder.fetchOperationsMetaData(connection);								
+								LogHelper.debug("create Nuxeo Server node");								
+								LogHelper.debug("Current Node = " + node.getLabel());
+								factory.create(connectionItem, propertiesWizardPage.getDestinationPath());								
 							} catch (Exception e) {
 								e.printStackTrace();
 							}							

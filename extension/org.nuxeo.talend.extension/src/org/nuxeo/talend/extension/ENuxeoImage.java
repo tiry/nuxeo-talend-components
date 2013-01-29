@@ -3,7 +3,8 @@ package org.nuxeo.talend.extension;
 import org.talend.commons.ui.runtime.image.IImage;
 
 public enum ENuxeoImage implements IImage {
-    NX_ICON("/icons/nx.png"),     
+    NX_ICON("/icons/nx.png"),
+    NX_OP("/icons/op.png"),
     ;
     
     private String path;

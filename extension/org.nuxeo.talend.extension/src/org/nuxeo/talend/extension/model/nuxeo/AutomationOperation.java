@@ -6,6 +6,7 @@
  */
 package org.nuxeo.talend.extension.model.nuxeo;
 
+import org.eclipse.emf.ecore.EObject;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.properties.Property;
 
@@ -26,7 +27,7 @@ import org.talend.core.model.properties.Property;
  * @model
  * @generated
  */
-public interface AutomationOperation extends Item {
+public interface AutomationOperation extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Operation Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->

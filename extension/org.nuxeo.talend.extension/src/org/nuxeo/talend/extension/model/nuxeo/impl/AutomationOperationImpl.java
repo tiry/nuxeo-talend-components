@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -48,7 +49,7 @@ import org.talend.core.model.properties.impl.ItemImpl;
  *
  * @generated
  */
-public class AutomationOperationImpl extends ItemImpl implements AutomationOperation {
+public class AutomationOperationImpl extends EObjectImpl implements AutomationOperation {
 	/**
 	 * The default value of the '{@link #getOperationId() <em>Operation Id</em>}' attribute.
 	 * <!-- begin-user-doc -->

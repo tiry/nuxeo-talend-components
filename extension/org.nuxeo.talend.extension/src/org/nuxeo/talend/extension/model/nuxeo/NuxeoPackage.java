@@ -617,58 +617,13 @@ public interface NuxeoPackage extends EPackage {
 	int AUTOMATION_OPERATION = 2;
 
 	/**
-	 * The feature id for the '<em><b>Property</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AUTOMATION_OPERATION__PROPERTY = PropertiesPackage.ITEM__PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>State</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AUTOMATION_OPERATION__STATE = PropertiesPackage.ITEM__STATE;
-
-	/**
-	 * The feature id for the '<em><b>Parent</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AUTOMATION_OPERATION__PARENT = PropertiesPackage.ITEM__PARENT;
-
-	/**
-	 * The feature id for the '<em><b>Reference Resources</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AUTOMATION_OPERATION__REFERENCE_RESOURCES = PropertiesPackage.ITEM__REFERENCE_RESOURCES;
-
-	/**
-	 * The feature id for the '<em><b>File Extension</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AUTOMATION_OPERATION__FILE_EXTENSION = PropertiesPackage.ITEM__FILE_EXTENSION;
-
-	/**
 	 * The feature id for the '<em><b>Operation Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int AUTOMATION_OPERATION__OPERATION_ID = PropertiesPackage.ITEM_FEATURE_COUNT + 0;
+	int AUTOMATION_OPERATION__OPERATION_ID = 0;
 
 	/**
 	 * The feature id for the '<em><b>Signature</b></em>' attribute.
@@ -677,7 +632,7 @@ public interface NuxeoPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int AUTOMATION_OPERATION__SIGNATURE = PropertiesPackage.ITEM_FEATURE_COUNT + 1;
+	int AUTOMATION_OPERATION__SIGNATURE = 1;
 
 	/**
 	 * The number of structural features of the '<em>Automation Operation</em>' class.
@@ -686,7 +641,7 @@ public interface NuxeoPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int AUTOMATION_OPERATION_FEATURE_COUNT = PropertiesPackage.ITEM_FEATURE_COUNT + 2;
+	int AUTOMATION_OPERATION_FEATURE_COUNT = 2;
 
 
 	/**

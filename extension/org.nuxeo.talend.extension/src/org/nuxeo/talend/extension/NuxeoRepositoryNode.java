@@ -1,11 +1,8 @@
 package org.nuxeo.talend.extension;
 
-import org.nuxeo.talend.extension.wizard.Messages;
-import org.talend.commons.ui.runtime.image.ECoreImage;
 import org.talend.commons.ui.runtime.image.IImage;
 import org.talend.core.repository.IExtendRepositoryNode;
 import org.talend.repository.model.RepositoryNode;
-import org.talend.repository.model.StableRepositoryNode;
 
 public class NuxeoRepositoryNode implements IExtendRepositoryNode {
 
@@ -20,12 +17,7 @@ public class NuxeoRepositoryNode implements IExtendRepositoryNode {
 	}
 
 	@Override
-	public Object[] getChildren() {
-		
-		//RepositoryNode folderNode1 = new StableRepositoryNode(this,
-		//		Messages.getString("title1"), ECoreImage.FOLDER_CLOSE_ICON);
-		
-		
+	public Object[] getChildren() {		
 	    return new RepositoryNode[0];
 	}
 
