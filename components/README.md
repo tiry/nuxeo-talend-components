@@ -5,7 +5,7 @@ Here are some sample Talend components for Nuxeo (Sandbox).
 
 The goal is to be able from within Talend OpenStudio to create Job that include Reading/Writing documents inside Nuxeo.
 
-## Building / Installting
+## Building / Installing
 
 There is no automated build, at least for now : this means that everything should be build from within Eclipse/TOS.
 
@@ -24,6 +24,7 @@ You should end up with 4 Nuxeo Components in the Components Palette under the *"
 Nuxeo supports Complex properties and uses namespaces : this does not make the mapping with Talend schema very easy.
 
 For technical constraints, the Talend schema field names must be java identiers : this excludes ":" and "/" that may used in XPath.
+
 In order to *"walkaround"* this, for now, you can :
 
  - define Talend schema with "valid java names"
