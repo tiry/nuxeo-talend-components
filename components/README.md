@@ -9,6 +9,8 @@ The goal is to be able from within Talend OpenStudio to create Job that include 
 
 There is no automated build, at least for now : this means that everything should be build from within Eclipse/TOS.
 
+### Installation the components
+
 To install the Nuxeo/Talend sample components :
 
  - from TOS 5.2 go in Window/Preferences/Talend/Component
@@ -18,6 +20,12 @@ To install the Nuxeo/Talend sample components :
  - restart TOS
 
 You should end up with 4 Nuxeo Components in the Components Palette under the *"Nuxeo Family"*
+
+### Component Designer
+
+ From TOS Eclipse environment go in Window/Preferences/Talend Component Designer.
+ 
+  - make Component Project point to the same directory as the "User Components" (ex: /home/jacky/Talend/components)
 
 ## Configuring the components
 
