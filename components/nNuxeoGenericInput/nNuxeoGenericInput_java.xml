@@ -98,9 +98,10 @@
   </ADVANCED_PARAMETERS>  
   <CODEGENERATION>
       <IMPORTS> 
-      <IMPORT MODULE="nuxeo-automation-client-5.7-SNAPSHOT.jar" NAME="nuxeo-automation-client-5.7-SNAPSHOT" REQUIRED="true"/>
-      <IMPORT MODULE="httpcore-4.1.jar" NAME="httpcore-4.1" REQUIRED="true"/>
-      <IMPORT MODULE="httpclient-4.1.jar" NAME="httpclient-4.1" REQUIRED="true"/>
+      <IMPORT MODULE="jersey-client-1.17.1.jar" NAME="jersey-client-1.17.1" REQUIRED="true"/>
+      <IMPORT MODULE="nuxeo-automation-client-5.8.jar" NAME="nuxeo-automation-client-5.8" REQUIRED="true"/>
+      <IMPORT MODULE="httpcore-osgi-4.2.4.jar" NAME="httpcore-osgo-4.2.4" REQUIRED="true"/>
+      <IMPORT MODULE="httpclient-osgi-4.2.4.jar" NAME="httpclient-osgi-4.2.4" REQUIRED="true"/>
       <IMPORT MODULE="jackson-core-asl-1.8.1.jar" NAME="jackson-core-asl-1.8.1" REQUIRED="true"/>
       <IMPORT MODULE="jackson-mapper-asl-1.8.1.jar" NAME="jackson-mapper-asl-1.8.1" REQUIRED="true"/>
       <IMPORT MODULE="jackson-mapper-asl-1.8.1.jar" NAME="jackson-mapper-asl-1.8.1" REQUIRED="true"/>

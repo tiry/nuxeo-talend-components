@@ -1,7 +1,7 @@
 nuxeo-talend-components
 =======================
 
-This repository contains a basic Talend components and extensions to access Nuxeo Platform via the http APIs.
+This repository contains basic Talend components and extensions to access Nuxeo Platform via the http APIs.
 
 The 2 children directory contain different kind of Talend related code
 

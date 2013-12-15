@@ -42,6 +42,12 @@ For example, let's say you want to use dc:title :
  - define a field named "dc_title"
  - set comment to "dc:title"
 
+## Using the components
+
+If you want to create or update documents inside Nuxeo from Talend, please see the [Create/Update sample](../doc/create_update.md).
+
+If you want fetch documents from Nuxeo in Talend, please see the [Fetch sample](../doc/fetch.md).
+
 ## Status
 
 All of this is testing code :

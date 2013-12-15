@@ -1,0 +1,101 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.core.model.metadata.IMetadataColumn 
+		org.talend.core.model.process.IConnection
+		org.talend.core.model.process.IConnectionCategory
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.metadata.types.JavaTypesManager
+		org.talend.core.model.metadata.types.JavaType
+		java.util.List 
+    	java.util.Map		
+	" 
+%>
+<% 
+    CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+    INode node = (INode)codeGenArgument.getArgument();
+    String cid = node.getUniqueName();	
+        
+    String parentPath = ElementParameterParser.getValue(node, "__PARENT_PATH__");    
+    String docType = ElementParameterParser.getValue(node, "__DOCTYPE__");
+    
+%>
+
+
+<%
+List<IMetadataTable> metadatas = node.getMetadataList();
+if ((metadatas!=null)&&(metadatas.size()>0)) {//1
+    IMetadataTable metadata = metadatas.get(0);
+    if (metadata!=null) {//2
+
+    	List< ? extends IConnection> conns = node.getIncomingConnections();
+    	for (IConnection conn : conns) {//3
+    		if (conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {//4
+    			List<IMetadataColumn> columns = metadata.getListColumns();
+    			int sizeColumns = columns.size();
+    			%>
+
+org.nuxeo.ecm.automation.client.model.DocRef <%=cid%>_parentRef = org.nuxeo.ecm.automation.client.model.DocRef.newRef(<%=parentPath%>);
+org.nuxeo.ecm.automation.client.model.DocRef <%=cid%>_ref;
+String <%=cid%>_docType = <%=docType%>;
+String <%=cid%>_name = "talenDoc";
+    			    		
+org.nuxeo.ecm.automation.client.model.PropertyMap <%=cid%>_propMap = new org.nuxeo.ecm.automation.client.model.PropertyMap(); 
+    			
+    			<%
+    			for (int i = 0; i < sizeColumns; i++) {//5
+  			
+    				IMetadataColumn column = columns.get(i);
+				    String nxFieldDef = column.getComment();
+				    if (nxFieldDef==null || nxFieldDef.isEmpty()) {
+				      nxFieldDef = column.getLabel();
+				    }
+				    nxFieldDef = nxFieldDef.replaceFirst("_",":");
+    				
+					JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+					
+					if ("name".equals(nxFieldDef)) {%>
+                    <%=cid%>_name = <%=conn.getName() %>.<%=column.getLabel()%>;					
+					<%} else if ("uid".equals(nxFieldDef)) {%>
+					<%=cid%>_ref = org.nuxeo.ecm.automation.client.model.DocRef.newRef(<%=conn.getName() %>.<%=column.getLabel()%>);					
+					<%} else if ("parentPath".equals(nxFieldDef)) {%>	
+					<%=cid%>_parentRef = new org.nuxeo.ecm.automation.client.model.DocRef(<%=conn.getName() %>.<%=column.getLabel()%>);					
+					<%} else if ("type".equals(nxFieldDef)) {%>
+					<%=cid%>_docType = <%=docType%>;
+					<%} else if ("title".equals(nxFieldDef)) {%>
+					<%=cid%>_propMap.set("dc:title",<%=conn.getName() %>.<%=column.getLabel()%>);
+					<%} else {%>
+                    <%=cid%>_propMap.set("<%=nxFieldDef%>",<%=conn.getName() %>.<%=column.getLabel()%>);
+                    <%}
+                  }//5%>
+                  
+org.nuxeo.ecm.automation.client.OperationRequest <%=cid%>_request = <%=cid%>_session.newRequest("Document.Create");
+if (<%=cid%>_ref!=null && ! <%=cid%>_ref.toString().isEmpty()) {
+  <%=cid%>_request = <%=cid%>_session.newRequest("Document.Update");
+  <%=cid%>_request.setInput(<%=cid%>_ref);
+  System.out.println("calling update with props = " + <%=cid%>_propMap.toString());  
+}
+else {
+  if (<%=cid%>_parentRef!=null && !<%=cid%>_parentRef.toString().isEmpty()) {
+    <%=cid%>_request.setInput(<%=cid%>_parentRef);
+  } else {
+    <%=cid%>_request.setInput(org.nuxeo.ecm.automation.client.model.DocRef.newRef(<%=parentPath%>));
+  }
+  <%=cid%>_request.set("type", <%=cid%>_docType);
+  <%=cid%>_request.set("name", <%=cid%>_name);
+  System.out.println("calling create with props = " + <%=cid%>_propMap.toString());  
+}
+
+<%=cid%>_request.set("properties", <%=cid%>_propMap.toString());
+
+org.nuxeo.ecm.automation.client.model.Document <%=cid%>_doc = (org.nuxeo.ecm.automation.client.model.Document) <%=cid%>_request.execute();
+                  <%                                    
+    		}//4
+    	}//3
+    }//2
+}//1
+%>
+
+
