@@ -7,11 +7,14 @@ The 2 children directory contain different kind of Talend related code
 
 ## Components 
 
-The [components](components) dir contains 'javajet' Talend components for Reading/Writing documents inside Nuxeo.
+The [components](components) dir contains 'javajet' Talend components for Reading/Writing documents from/to Nuxeo.
 
 See the [ReadMe file](components/README.md) for more details.
 
-NB : This part should be workable.
+See also samples : 
+
+ - [Create/Update sample](doc/create_update.md).
+ - [Fetch sample](doc/fetch.md).
 
 ## Extensions
 

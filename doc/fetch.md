@@ -31,7 +31,7 @@ For output we define a schema to map the poperties we want
 
 We use the tMap to do simple mapping.
 
-![mapping](pictures/tMap.png)
+![mapping](pictures/tmap.png)
 
 #### tLogRow
 
