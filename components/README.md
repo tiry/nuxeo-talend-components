@@ -50,6 +50,14 @@ For example, let's say you want to use dc:title :
 
 `nNuxeoGenericInput` : same as `nNuxeoInput`, but let you choose the target Operation on the Nuxeo side
 
+This is just a minimal set of components and we could almost generate one Talend component for each Nuxeo Automation Operation.
+
+For now, we decided to keep it simple, for now, because : 
+
+ - JavaJet is a real a pain : this code should be generated !
+ - we should build an additional component to handle mapping outside of JavaJet
+ - I don't like writting code, if I don't have a way to share the code and to test it 
+
 ## Using the components
 
 If you want to create or update documents inside Nuxeo from Talend, please see the [Create/Update sample](../doc/create_update.md).
