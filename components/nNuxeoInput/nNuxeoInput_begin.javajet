@@ -69,15 +69,26 @@ for (org.nuxeo.ecm.automation.client.model.Document doc : docs) {
     if (nxFieldDef==null || nxFieldDef.isEmpty()) {
       nxFieldDef = col.getLabel();
     }
-    if ("id".equals(nxFieldDef)) {%>
+    nxFieldDef = nxFieldDef.replaceFirst("_",":");
+    %>
+    
+    <%    
+    
+    if ("id".equals(nxFieldDef)||"uid".equals(nxFieldDef)) {%>
      <%=conn.getName()%>.<%=col.getLabel()%> = doc.getId();
     <%} else if ("path".equals(nxFieldDef)) {%>
      <%=conn.getName()%>.<%=col.getLabel()%> = doc.getPath();
+    <%} else if ("docType".equals(nxFieldDef)) {%>
+     <%=conn.getName()%>.<%=col.getLabel()%> = doc.getType();
+    <%} else if ("title".equals(nxFieldDef)) {%>
+     <%=conn.getName()%>.<%=col.getLabel()%> = doc.getTitle();
     <%} else {%>
      <%if (col.getTalendType().equals("id_String")) {%>
      	<%=conn.getName()%>.<%=col.getLabel()%> = doc.getString("<%=nxFieldDef%>");
      <%} else if (col.getTalendType().equals("id_Date")) {%>
       	<%=conn.getName()%>.<%=col.getLabel()%> = doc.getDate("<%=nxFieldDef%>");
+    <%} else if (col.getTalendType().equals("id_List")) {%>
+      	<%=conn.getName()%>.<%=col.getLabel()%> = doc.getProperties().getList("<%=nxFieldDef%>").list();
      <%} else {%>
        System.out.println("no mapping for : <%=col.getTalendType()%>" );       
      <%}

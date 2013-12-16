@@ -69,6 +69,8 @@ for (org.nuxeo.ecm.automation.client.model.Document doc : docs) {
     if (nxFieldDef==null || nxFieldDef.isEmpty()) {
       nxFieldDef = col.getLabel();
     }
+    nxFieldDef = nxFieldDef.replaceFirst("_",":");
+    
     if ("id".equals(nxFieldDef)) {%>
      <%=conn.getName()%>.<%=col.getLabel()%> = doc.getId();
     <%} else if ("path".equals(nxFieldDef)) {%>

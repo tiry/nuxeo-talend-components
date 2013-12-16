@@ -42,6 +42,14 @@ For example, let's say you want to use dc:title :
  - define a field named "dc_title"
  - set comment to "dc:title"
 
+## Provided componets 
+
+`nNuxeoCreateOrUpdate` : output component that can be used to create or Update documents inside Nuxeo
+
+`nNuxeoInput` : simple components that allows to query Nuxeo to retrieve documents and use them inside Talend
+
+`nNuxeoGenericInput` : same as `nNuxeoInput`, but let you choose the target Operation on the Nuxeo side
+
 ## Using the components
 
 If you want to create or update documents inside Nuxeo from Talend, please see the [Create/Update sample](../doc/create_update.md).
